@@ -1,16 +1,20 @@
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Arrays;
+
 import javax.swing.JPanel;
 
 
-public class NineMensMorrisPanel extends JPanel implements ActionListener, MouseListener {
+public class NineMensMorrisPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private JPanel boardPanel, controlsPanel;
+	private NineMensMorrisBoardPanel boardPanel;
+	private NineMensMorrisControlsPanel controlsPanel;
 	
 	public NineMensMorrisPanel () {
 		setPreferredSize(new Dimension(720, 500));
@@ -22,7 +26,7 @@ public class NineMensMorrisPanel extends JPanel implements ActionListener, Mouse
 		c.gridx = 0; c.gridy = 0;
 		c.gridwidth = 2; c.gridheight = 3;
 		
-		boardPanel = new NineMensMorrisBoardPanel();
+		boardPanel = new NineMensMorrisBoardPanel(new ClickListener(this));
 		add(boardPanel, c);
 		
 		c.fill = GridBagConstraints.VERTICAL;
@@ -33,40 +37,26 @@ public class NineMensMorrisPanel extends JPanel implements ActionListener, Mouse
 		controlsPanel = new NineMensMorrisControlsPanel();
 		add(controlsPanel, c);
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	
+	
+	class ClickListener implements MouseListener {
+		private NineMensMorrisPanel panel;
 		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		public ClickListener(NineMensMorrisPanel panel) {
+			this.panel = panel;
+		}
 		
-	}
+		public void mouseClicked(MouseEvent e) {	
+			if (e.getButton() == 1) {
+				panel.boardPanel.setPlayer1PieceIndices(Arrays.asList(e.getX()));
+				System.out.println(e.getX());
+			}
+		}
 
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		public void mouseEntered(MouseEvent e) {}
+		public void mouseExited(MouseEvent e) {}
+		public void mousePressed(MouseEvent e) {}
+		public void mouseReleased(MouseEvent e) {}
 	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }
