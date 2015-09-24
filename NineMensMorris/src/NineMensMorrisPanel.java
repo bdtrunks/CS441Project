@@ -19,15 +19,13 @@ public class NineMensMorrisPanel extends JPanel {
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1; c.weighty = 1;
 		c.gridx = 0; c.gridy = 0;
-		c.gridwidth = 2; c.gridheight = 3;
 		
 		boardPanel = new NineMensMorrisBoardPanel(new ClickListener(this));
 		add(boardPanel, c);
 		
 		c.fill = GridBagConstraints.VERTICAL;
 		c.weightx = 0; c.weighty = 1;
-		c.gridx = 3; c.gridy = 0;
-		c.gridwidth = 1; c.gridheight = 3;
+		c.gridx = 1; c.gridy = 0;
 		
 		controlsPanel = new NineMensMorrisControlsPanel();
 		add(controlsPanel, c);

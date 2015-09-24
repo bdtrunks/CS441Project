@@ -1,4 +1,9 @@
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -133,7 +138,7 @@ public class NineMensMorrisBoardPanel extends JPanel {
 				int x = Math.round((float)(e.getPoint().x - (width / 2)) / scale);
 				int y = Math.round((float)(e.getPoint().y - (height / 2)) / scale);
 				
-				int gridIndex = panel.GRID_POINTS.indexOf(new Point(x, y));
+				int gridIndex = NineMensMorrisBoardPanel.GRID_POINTS.indexOf(new Point(x, y));
 				if (gridIndex > -1) {
 					MouseEvent event = new MouseEvent(e.getComponent(), e.getID(), e.getWhen(), e.getModifiers(), gridIndex, 0, e.getClickCount(), e.isPopupTrigger());
 					panel.boardClickListener.mouseClicked(event);
