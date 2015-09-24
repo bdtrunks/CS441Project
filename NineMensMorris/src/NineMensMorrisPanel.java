@@ -1,18 +1,13 @@
+import java.util.Arrays;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.GridBagConstraints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Arrays;
-
 import javax.swing.JPanel;
 
-
+@SuppressWarnings("serial")
 public class NineMensMorrisPanel extends JPanel {
-	private static final long serialVersionUID = 1L;
 	private NineMensMorrisBoardPanel boardPanel;
 	private NineMensMorrisControlsPanel controlsPanel;
 	
@@ -38,7 +33,6 @@ public class NineMensMorrisPanel extends JPanel {
 		add(controlsPanel, c);
 	}
 	
-	
 	class ClickListener implements MouseListener {
 		private NineMensMorrisPanel panel;
 		
@@ -58,5 +52,4 @@ public class NineMensMorrisPanel extends JPanel {
 		public void mousePressed(MouseEvent e) {}
 		public void mouseReleased(MouseEvent e) {}
 	}
-	
 }
