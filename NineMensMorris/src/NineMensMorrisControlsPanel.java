@@ -27,6 +27,7 @@ public class NineMensMorrisControlsPanel extends JPanel {
 		playerLabel = new Label("Player 1");
 		playerLabel.setFont(new Font("Helvetica", 0, 40));
 		playerLabel.setAlignment(Label.CENTER);
+		playerLabel.setName("playerLabel");
 		add(playerLabel, c);
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -38,6 +39,7 @@ public class NineMensMorrisControlsPanel extends JPanel {
 		
 		newGameButton = new JButton("New Game");
 		newGameButton.setPreferredSize(new Dimension(200, 50));
+		newGameButton.setName("newGameButton");
 		add(newGameButton, c);
 	}
 }

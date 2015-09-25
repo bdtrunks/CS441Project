@@ -1,7 +1,6 @@
 import java.util.Arrays;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.util.List;
 import java.awt.Point;
 import java.awt.GridBagConstraints;
 import java.awt.event.MouseEvent;
@@ -13,6 +12,7 @@ public class NineMensMorrisPanel extends JPanel {
 	private NineMensMorrisBoardPanel boardPanel;
 	private NineMensMorrisControlsPanel controlsPanel;
 	
+	@SuppressWarnings("unused")
 	private static final Point[] SPOT_INDEX_MAP = {
 			new Point(0, 0), new Point(0, 1), new Point(0, 2),
 			new Point(1, 0), new Point(1, 1), new Point(1, 2),
@@ -33,6 +33,7 @@ public class NineMensMorrisPanel extends JPanel {
 		c.gridx = 0; c.gridy = 0;
 		
 		boardPanel = new NineMensMorrisBoardPanel(new ClickListener(this));
+		boardPanel.setName("boardPanel");
 		add(boardPanel, c);
 		
 		c.fill = GridBagConstraints.VERTICAL;
@@ -40,6 +41,7 @@ public class NineMensMorrisPanel extends JPanel {
 		c.gridx = 1; c.gridy = 0;
 		
 		controlsPanel = new NineMensMorrisControlsPanel();
+		controlsPanel.setName("controlsPanel");
 		add(controlsPanel, c);
 	}
 	
