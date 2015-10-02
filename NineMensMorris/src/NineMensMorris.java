@@ -1,14 +1,20 @@
 import javax.swing.JFrame;
 
-public class NineMensMorris {
+@SuppressWarnings("serial")
+public class NineMensMorris extends JFrame{
+	
+	public NineMensMorris() {
+		//new JFrame("9 Men's Morris");
+		setTitle("9 Men's Morris");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().add(new NineMensMorrisPanel());
+		
+		pack();
+		setVisible(true);
+	}
 
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("9 Men's Morris");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().add(new NineMensMorrisPanel());
-		
-		frame.pack();
-		frame.setVisible(true);
+		new NineMensMorris();
 	}
 
 }

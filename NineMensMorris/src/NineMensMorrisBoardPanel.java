@@ -131,16 +131,19 @@ public class NineMensMorrisBoardPanel extends JPanel {
 		
 		public void mouseClicked(MouseEvent e) {	
 			if (e.getButton() == 1) {
+				System.out.println(e);
 				int width = getWidth(), height = getHeight();
 				int	maxSize = Math.min(width, height);
 				int scale = maxSize / 8;
-				
+				System.out.println(e.getPoint().x);
+				System.out.println(e.getPoint().y);
 				int x = Math.round((float)(e.getPoint().x - (width / 2)) / scale);
 				int y = Math.round((float)(e.getPoint().y - (height / 2)) / scale);
 				
 				int gridIndex = NineMensMorrisBoardPanel.GRID_POINTS.indexOf(new Point(x, y));
 				if (gridIndex > -1) {
 					MouseEvent event = new MouseEvent(e.getComponent(), e.getID(), e.getWhen(), e.getModifiers(), gridIndex, 0, e.getClickCount(), e.isPopupTrigger());
+					System.out.println(event);
 					panel.boardClickListener.mouseClicked(event);
 				}
 			}

@@ -4,12 +4,14 @@ import java.awt.Insets;
 import java.awt.Label;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class NineMensMorrisControlsPanel extends JPanel {
-	private Label playerLabel;
+	private JLabel playerLabel;
 	private JButton newGameButton;
 	
 	public NineMensMorrisControlsPanel() {
@@ -24,9 +26,9 @@ public class NineMensMorrisControlsPanel extends JPanel {
 		c.gridx = 0; c.gridy = 0;
 		c.gridwidth = 1; c.gridheight = 1;
 		
-		playerLabel = new Label("Player 1");
+		playerLabel = new JLabel("Player 1");
 		playerLabel.setFont(new Font("Helvetica", 0, 40));
-		playerLabel.setAlignment(Label.CENTER);
+		//playerLabel.setAlignment(Label.CENTER);
 		playerLabel.setName("playerLabel");
 		add(playerLabel, c);
 		
