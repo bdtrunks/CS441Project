@@ -1,4 +1,5 @@
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -61,9 +62,17 @@ public class Logic {
 	public int getPlayerOnePiece() {
 		return playerOnePieces.size();
 	}
+	
+	public List<Point> getPlayerOnePieces() {
+		return new ArrayList<Point>(playerOnePieces);
+	}
 
 	public int getPlayerTwoPiece() {
 		return playerTwoPieces.size();
+	}
+	
+	public List<Point> getPlayerTwoPieces() {
+		return new ArrayList<Point>(playerTwoPieces);
 	}
 
 	public Collection<Point> checkMoves(int square, int point) {

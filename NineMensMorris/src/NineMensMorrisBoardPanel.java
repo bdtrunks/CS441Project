@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Collection;
+import java.util.Collections;
+
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
@@ -41,9 +43,9 @@ public class NineMensMorrisBoardPanel extends JPanel {
 			new Point(-2,  2), new Point( 0,  2), new Point( 2,  2),
 			new Point(-3,  3), new Point( 0,  3), new Point( 3,  3));
 	
-	private Collection<Integer> player1PieceIndices = new ArrayList<Integer>();
-	private Collection<Integer> player2PieceIndices = Arrays.asList(3, 8);
-	private Collection<Integer> validMoveIndices = Arrays.asList(5, 20);
+	private Collection<Integer> player1PieceIndices = Collections.emptyList();
+	private Collection<Integer> player2PieceIndices = Collections.emptyList();
+	private Collection<Integer> validMoveIndices = Collections.emptyList();
 	
 	private final MouseListener boardClickListener;
 	
