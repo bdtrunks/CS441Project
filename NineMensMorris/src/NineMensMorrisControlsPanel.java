@@ -44,4 +44,8 @@ public class NineMensMorrisControlsPanel extends JPanel {
 		newGameButton.setName("newGameButton");
 		add(newGameButton, c);
 	}
+	
+	public void setPlayerLabel(int player) {
+		playerLabel.setText("Player " + player);
+	}
 }

@@ -12,6 +12,7 @@ public class Logic {
 	private int playerTurn;
 	private int phase; // phase 1 place pieces, phase 2 move pieces, phase 3
 						// remove opponent
+	private int piecesPlaced;
 	private Board board;
 	private int playerWon;
 
@@ -20,7 +21,7 @@ public class Logic {
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 8; j++) {
 				emptySpaces[i][j] = true;
-				
+
 			}
 		}
 		playerOnePieces = new LinkedList<Point>();
@@ -29,6 +30,7 @@ public class Logic {
 		phase = 1;
 		board = new Board();
 		playerWon = 0;
+		piecesPlaced = 0;
 	}
 
 	private void setPlayer() {
@@ -42,11 +44,11 @@ public class Logic {
 	public void setPhase(int phase) {
 		this.phase = phase;
 	}
-	
-	public Board getBoard(){
+
+	public Board getBoard() {
 		return board;
 	}
-	
+
 	public void setBoardNode(int square, int point, int newPlayer) {
 		board.setBoardNode(square, point, newPlayer);
 	}
@@ -62,7 +64,7 @@ public class Logic {
 	public int getPlayerOnePiece() {
 		return playerOnePieces.size();
 	}
-	
+
 	public List<Point> getPlayerOnePieces() {
 		return new ArrayList<Point>(playerOnePieces);
 	}
@@ -70,7 +72,7 @@ public class Logic {
 	public int getPlayerTwoPiece() {
 		return playerTwoPieces.size();
 	}
-	
+
 	public List<Point> getPlayerTwoPieces() {
 		return new ArrayList<Point>(playerTwoPieces);
 	}
@@ -145,15 +147,21 @@ public class Logic {
 	public boolean placePiece(int square, int point) {
 		if (board.getBoardNode(square, point) == 0) {
 			board.setBoardNode(square, point, playerTurn);
-			if (board.checkMill(square, point, playerTurn)) {
-				// todo
-			}
-			setPlayer();
 			Point add = new Point(square, point);
 			if (playerTurn == 1) {
 				playerOnePieces.add(add);
 			} else {
 				playerTwoPieces.add(add);
+			}
+			if (board.checkMill(square, point, playerTurn)) {
+				phase = 3;
+			} else {
+				setPlayer();
+			}
+			piecesPlaced++;
+			if (piecesPlaced == 18) {
+				checkWin();
+				phase = 2;
 			}
 			return true;
 		}
@@ -170,13 +178,11 @@ public class Logic {
 			board.setBoardNode(square, point, 0);
 			board.setBoardNode(moveSquare, movePoint, playerTurn);
 			if (board.checkMill(moveSquare, movePoint, playerTurn)) {
-				// todo
-			}
-			setPlayer();
-			if (checkWin()) {
+				phase = 3;
+			} else {
 				setPlayer();
-				playerWon = playerTurn; 
 			}
+			checkWin();
 			return true;
 		}
 
@@ -184,46 +190,53 @@ public class Logic {
 	}
 
 	public boolean removePiece(int square, int point) {
-		board.setBoardNode(square, point, 0);
+		if (playerTurn == 1)
+			return remove(square,point,2,playerTwoPieces);
+		else
+			return remove(square,point,1,playerOnePieces);
+	}
+	
+	public boolean remove(int square, int point, int player, List<Point> playerPieces) {
 		Point remove = new Point(square, point);
-		if (playerTurn == 1) {
-			playerTwoPieces.remove(remove);
-		} else {
-			playerOnePieces.remove(remove);
+		if (board.getBoardNode(square, point) == player) {
+			if (!board.checkMill(square, point, player) || playerPieces.size() <= 3) {
+				board.setBoardNode(square, point, 0);
+				playerPieces.remove(remove);
+				setPlayer();
+				if (piecesPlaced == 18)
+					phase = 2;
+				else
+					phase = 1;
+				return true;
+			}
 		}
 		return false;
 	}
 
-	public boolean checkWin() {
-		if (playerTurn == 1) {
-			if (playerOnePieces.size() < 3) {
-				return true;
-			}
-			Iterator<Point> iterator = playerOnePieces.iterator();
-			while (iterator.hasNext()) {
-				Point check = iterator.next();
-				Collection<Point> moves = checkMoves(check.x, check.y);
-				if (!moves.isEmpty()) {
-					return false;
-				}
-			}
-			return true;
-		}
-		if (playerTurn == 2) {
-			if (playerTwoPieces.size() < 3) {
-				return true;
-			}
-			Iterator<Point> iterator = playerTwoPieces.iterator();
-			while (iterator.hasNext()) {
-				Point check = iterator.next();
-				Collection<Point> moves = checkMoves(check.x, check.y);
-				if (!moves.isEmpty()) {
-					return false;
-				}
-			}
-			return true;
-		}
-
-		return false;
+	public void checkWin() {
+			if (isLoser(playerOnePieces))
+				playerWon = 2;
+			if (isLoser(playerTwoPieces))
+				playerWon = 1;
 	}
+	
+	public boolean isLoser(List<Point> playerPieces) {
+		if (playerPieces.size() < 3) {
+			return true;
+		}
+		Iterator<Point> iterator = playerPieces.iterator();
+		while (iterator.hasNext()) {
+			Point check = iterator.next();
+			Collection<Point> moves = checkMoves(check.x, check.y);
+			if (!moves.isEmpty()) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public int getWinner() {
+		return playerWon;
+	}
+	
 }
