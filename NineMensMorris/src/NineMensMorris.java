@@ -1,5 +1,7 @@
 import javax.swing.JFrame;
 
+import ui.NineMensMorrisPanel;
+
 @SuppressWarnings("serial")
 public class NineMensMorris extends JFrame{
 	
