@@ -123,6 +123,7 @@ public class NineMensMorrisPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			panel.logic = new Logic();
+			panel.controlsPanel.setPlayerLabel(logic.getPlayer());
 			panel.setPlayerPieces(1, Collections.emptyList());
 			panel.setPlayerPieces(2, Collections.emptyList());
 			panel.setValidMoves(Collections.emptyList());
