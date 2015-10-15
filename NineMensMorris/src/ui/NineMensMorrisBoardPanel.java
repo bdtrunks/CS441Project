@@ -1,20 +1,20 @@
 package ui;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Arrays;
+import java.util.List;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Dimension;
+import java.awt.Color;
+import java.awt.BasicStroke;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Collection;
-import java.util.Collections;
 import javax.swing.JPanel;
 
 import ui.NineMensMorrisPanel.BoardClickListener;
-
 
 @SuppressWarnings("serial")
 public class NineMensMorrisBoardPanel extends JPanel {
@@ -23,11 +23,11 @@ public class NineMensMorrisBoardPanel extends JPanel {
 	private static final double GRID_POINT_SIZE = 0.18;
 	
 	private static final double GAME_PIECE_SIZE = 0.6;
-	private static final Color PLAYER_1_COLOR = Color.blue;
-	private static final Color PLAYER_2_COLOR = Color.orange;
+	private static final Color PLAYER_1_COLOR = Color.decode("#09347A");
+	private static final Color PLAYER_2_COLOR = Color.decode("#F1632A");
 	
 	private static final double VALID_MOVE_SIZE = 0.3;
-	private static final Color VALID_MOVE_COLOR = Color.green;
+	private static final Color VALID_MOVE_COLOR = Color.decode("#13A558");
 	
 	private static final Collection<Integer> GRID_SQUARES = Arrays.asList(2, 4, 6);
 	private static final Collection<Pair<Point>> GRID_LINES = Arrays.asList(
