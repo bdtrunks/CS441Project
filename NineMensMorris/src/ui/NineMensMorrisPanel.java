@@ -71,8 +71,17 @@ public class NineMensMorrisPanel extends JPanel {
  		}
 	}
 	
+	public void setValidMoves(Collection<Point> moves) {
+		Collection<Integer> spots = new LinkedList<>();
+		for (Point move : moves) {
+			spots.add(SPOT_INDEX_MAP.indexOf(move));
+		}
+		this.boardPanel.setValidMoveIndices(spots);
+	}
+	
 	public class BoardClickListener {
 		private NineMensMorrisPanel panel;
+		private Point prevPoint;
 		
 		public BoardClickListener(NineMensMorrisPanel panel) {
 			this.panel = panel;
@@ -85,7 +94,13 @@ public class NineMensMorrisPanel extends JPanel {
 					panel.logic.placePiece(p.x, p.y);
 					break;
 				case 2: // move piece
-					
+					if (prevPoint != null && logic.movePiece(prevPoint.x, prevPoint.y, p.x, p.y)) {
+						prevPoint = null;
+						panel.setValidMoves(Collections.emptyList());
+					} else {
+						prevPoint = p;
+						panel.setValidMoves(panel.logic.checkMoves(p.x, p.y));
+					}
 					break;	
 				case 3: // remove piece
 					panel.logic.removePiece(p.x, p.y);
@@ -110,6 +125,7 @@ public class NineMensMorrisPanel extends JPanel {
 			panel.logic = new Logic();
 			panel.setPlayerPieces(1, Collections.emptyList());
 			panel.setPlayerPieces(2, Collections.emptyList());
+			panel.setValidMoves(Collections.emptyList());
 		}
 	}
 }

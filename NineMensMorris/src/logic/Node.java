@@ -6,16 +6,13 @@ public class Node {
 	
 	public Node(){
 		player = 0;
-		
 	}
 	
 	public int getPlayer(){
-		
 		return player;
 	}
 	
 	public void setPlayer(int newPlayer){
-		
-		player = newPlayer;
+		this.player = newPlayer;
 	}
 }
