@@ -178,6 +178,13 @@ public class Logic {
 		if (moves.contains(check)) {
 			board.setBoardNode(square, point, 0);
 			board.setBoardNode(moveSquare, movePoint, playerTurn);
+			if (playerTurn == 1) {
+				playerOnePieces.remove(new Point(square, point));
+				playerOnePieces.add(new Point(moveSquare, movePoint));
+			} else {
+				playerTwoPieces.remove(new Point(square, point));
+				playerTwoPieces.add(new Point(moveSquare, movePoint));
+			}
 			if (board.checkMill(moveSquare, movePoint, playerTurn)) {
 				phase = 3;
 			} else {
