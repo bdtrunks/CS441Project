@@ -17,9 +17,9 @@ import javax.swing.SwingConstants;
 public class NineMensMorrisControlsPanel extends JPanel {
 	private static final Color[] PLAYER_COLOR = {null, NineMensMorrisBoardPanel.PLAYER_1_COLOR, 
 													NineMensMorrisBoardPanel.PLAYER_2_COLOR};
-	private JLabel playerLabel;
-	private JTextArea instructions;
-	private JButton newGameButton;
+	private JLabel	  playerLabel;
+	private JTextArea instructionsTextArea;
+	private JButton	  newGameButton;
 	
 	public NineMensMorrisControlsPanel(ActionListener newGameListener) {
 		setPreferredSize(new Dimension(220, 55));
@@ -43,13 +43,13 @@ public class NineMensMorrisControlsPanel extends JPanel {
 		c.weightx = 1; c.weighty = 0;
 		c.gridx = 0; c.gridy = 1;
 		
-		instructions = new JTextArea(3, 50);
-		instructions.setEditable(false);
-		instructions.setLineWrap(true);
-		instructions.setWrapStyleWord(true);
+		instructionsTextArea = new JTextArea(3, 50);
+		instructionsTextArea.setEditable(false);
+		instructionsTextArea.setLineWrap(true);
+		instructionsTextArea.setWrapStyleWord(true);
 		
-		instructions.setPreferredSize(new Dimension(200, 50));
-		add(instructions, c);
+		instructionsTextArea.setPreferredSize(new Dimension(200, 50));
+		add(instructionsTextArea, c);
 		
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -78,16 +78,16 @@ public class NineMensMorrisControlsPanel extends JPanel {
 	public void setInstructions(int phase) {
 		switch(phase) {
 			case 1: // place piece
-				instructions.setText("Place a piece on an empty spot on the board.");
+				instructionsTextArea.setText("Place a piece on an empty spot on the board.");
 				break;
 			case 2: // move piece
-				instructions.setText("Move one of your pieces to an open spot.");
+				instructionsTextArea.setText("Move one of your pieces to an open spot.");
 				break;	
 			case 3: // remove piece
-				instructions.setText("Remove one of your opponents pieces.");
+				instructionsTextArea.setText("Remove one of your opponents pieces.");
 				break;
 			case 4: // winner
-				instructions.setText("Is The WINNER!");
+				instructionsTextArea.setText("Is The WINNER!");
 				break;
 		}
 	}

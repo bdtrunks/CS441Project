@@ -47,7 +47,7 @@ public class NineMensMorrisBoardPanel extends JPanel {
 	
 	private Collection<Integer> player1PieceIndices = Collections.emptyList();
 	private Collection<Integer> player2PieceIndices = Collections.emptyList();
-	private Collection<Integer> validMoveIndices = Collections.emptyList();
+	private Collection<Integer> validMoveIndices	= Collections.emptyList();
 	
 	private final BoardClickListener boardClickListener;
 	
@@ -100,15 +100,15 @@ public class NineMensMorrisBoardPanel extends JPanel {
 		repaint();
 	}
 	
-	private void drawSquare(Graphics2D canvas, Point center, int size, int scale) {
-		size *= scale;
-		int half = size / 2;
-		canvas.drawRect(center.x-half, center.y-half, size, size);
-	}
-	
 	private void drawLine(Graphics2D canvas, Point center, Point start, Point end, int scale) {
 		canvas.drawLine(center.x + start.x * scale, center.y + start.y * scale, 
 						center.x + end.x * scale, center.y + end.y * scale);
+	}
+	
+	private void drawSquare(Graphics2D canvas, Point center, int size, int scale) {
+		int scaledSize = (int)(size * scale);
+		int half = scaledSize / 2;
+		canvas.drawRect(center.x-half, center.y-half, scaledSize, scaledSize);
 	}
 	
 	private void drawCircle(Graphics2D canvas, Point center, Point location, double size, int scale) {
@@ -132,7 +132,7 @@ public class NineMensMorrisBoardPanel extends JPanel {
 			this.panel = panel;
 		}
 		
-		public void mouseClicked(MouseEvent e) {	
+		public void mouseReleased(MouseEvent e) {	
 			int width = getWidth(), height = getHeight();
 			int scale = Math.min(width, height) / 8;
 			int x = Math.round((float)(e.getPoint().x - (width / 2)) / scale);
@@ -147,6 +147,6 @@ public class NineMensMorrisBoardPanel extends JPanel {
 		public void mouseEntered(MouseEvent e) {}
 		public void mouseExited(MouseEvent e) {}
 		public void mousePressed(MouseEvent e) {}
-		public void mouseReleased(MouseEvent e) {}
+		public void mouseClicked(MouseEvent e) {}
 	}
 }

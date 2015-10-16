@@ -110,13 +110,8 @@ public class NineMensMorrisPanel extends JPanel {
 			panel.setPlayerPieces(1, panel.logic.getPlayerOnePieces());
 			panel.setPlayerPieces(2, panel.logic.getPlayerTwoPieces());
 			
-			if (panel.logic.getWinner() > 0) {
-				panel.controlsPanel.setPlayerLabel(logic.getWinner());
-				panel.controlsPanel.setInstructions(4);
-			} else {
-				panel.controlsPanel.setPlayerLabel(logic.getPlayer());
-				panel.controlsPanel.setInstructions(logic.getPhase());
-			}
+			panel.controlsPanel.setPlayerLabel((panel.logic.getWinner() > 0) ? logic.getWinner() : logic.getPlayer());
+			panel.controlsPanel.setInstructions(logic.getPhase());
 		}
 	}
 	
@@ -131,7 +126,7 @@ public class NineMensMorrisPanel extends JPanel {
 		public void actionPerformed(ActionEvent arg0) {
 			panel.logic = new Logic();
 			panel.controlsPanel.setPlayerLabel(logic.getPlayer());
-			panel.controlsPanel.setInstructions(1);
+			panel.controlsPanel.setInstructions(logic.getPhase());
 			panel.setPlayerPieces(1, Collections.emptyList());
 			panel.setPlayerPieces(2, Collections.emptyList());
 			panel.setValidMoves(Collections.emptyList());
