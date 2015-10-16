@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
@@ -14,6 +15,8 @@ import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class NineMensMorrisControlsPanel extends JPanel {
+	private static final Color[] PLAYER_COLOR = {null, Color.decode("#09347A"), Color.decode("#F1632A")};
+	
 	private JLabel playerLabel;
 	private JTextArea instructions;
 	private JButton newGameButton;
@@ -57,7 +60,7 @@ public class NineMensMorrisControlsPanel extends JPanel {
 		c.gridwidth = 1; c.gridheight = 1;
 		
 		newGameButton = new JButton("New Game");
-		newGameButton.setPreferredSize(new Dimension(200, 700));
+		newGameButton.setPreferredSize(new Dimension(200, 100));
 		newGameButton.setName("newGameButton");
 		add(newGameButton, c);
 		
@@ -69,6 +72,7 @@ public class NineMensMorrisControlsPanel extends JPanel {
 	
 	public void setPlayerLabel(int player) {
 		playerLabel.setText("Player " + player);
+		playerLabel.setForeground(PLAYER_COLOR[player]);
 	}
 	
 	public void setInstructions(int phase) {
@@ -81,6 +85,9 @@ public class NineMensMorrisControlsPanel extends JPanel {
 				break;	
 			case 3: // remove piece
 				instructions.setText("Remove one of your opponents pieces.");
+				break;
+			case 4: // winner
+				instructions.setText("Is The WINNER!");
 				break;
 		}
 	}

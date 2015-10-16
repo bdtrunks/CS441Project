@@ -107,10 +107,16 @@ public class NineMensMorrisPanel extends JPanel {
 					break;
 			}
 			
-			panel.controlsPanel.setPlayerLabel(logic.getPlayer());
-			panel.controlsPanel.setInstructions(logic.getPhase());
 			panel.setPlayerPieces(1, panel.logic.getPlayerOnePieces());
 			panel.setPlayerPieces(2, panel.logic.getPlayerTwoPieces());
+			
+			if (panel.logic.getWinner() > 0) {
+				panel.controlsPanel.setPlayerLabel(logic.getWinner());
+				panel.controlsPanel.setInstructions(4);
+			} else {
+				panel.controlsPanel.setPlayerLabel(logic.getPlayer());
+				panel.controlsPanel.setInstructions(logic.getPhase());
+			}
 		}
 	}
 	
