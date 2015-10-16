@@ -15,12 +15,18 @@ import javax.swing.JPanel;
 
 import logic.Logic;
 
+/**
+ * Contains the panels for the 9 men morris game board and controls/information
+ * @author Owner
+ *
+ */
 @SuppressWarnings("serial")
 public class NineMensMorrisPanel extends JPanel {
 	private NineMensMorrisBoardPanel boardPanel;
 	private NineMensMorrisControlsPanel controlsPanel;
 	private Logic logic;
 	
+	//List of all possible game positions
 	private static final List<Point> SPOT_INDEX_MAP = Arrays.asList(
 			new Point(0, 0), new Point(0, 1), new Point(0, 2),
 			new Point(1, 0), new Point(1, 1), new Point(1, 2),
@@ -31,6 +37,9 @@ public class NineMensMorrisPanel extends JPanel {
 			new Point(1, 6), new Point(1, 5), new Point(1, 4),
 			new Point(0, 6), new Point(0, 5), new Point(0, 4));
 	
+	/**
+	 * Creates board panel and controls panel objects
+	 */
 	public NineMensMorrisPanel () {
 		this.logic = new Logic();
 		
@@ -55,6 +64,11 @@ public class NineMensMorrisPanel extends JPanel {
 		add(controlsPanel, c);
 	}
 	
+	/**
+	 * Sets the game spaces on the board panel for the given player
+	 * @param player - player to set spaces for
+	 * @param pieces - all possible game spaces
+	 */
 	public void setPlayerPieces(int player, List<Point> pieces) {
 		Collection<Integer> spots = new LinkedList<>();
 		for (Point piece : pieces) {
@@ -71,6 +85,10 @@ public class NineMensMorrisPanel extends JPanel {
  		}
 	}
 	
+	/**
+	 * Sets what spots on the game board can be moved to
+	 * @param moves - collection of valid moves
+	 */
 	public void setValidMoves(Collection<Point> moves) {
 		Collection<Integer> spots = new LinkedList<>();
 		for (Point move : moves) {
@@ -79,14 +97,26 @@ public class NineMensMorrisPanel extends JPanel {
 		this.boardPanel.setValidMoveIndices(spots);
 	}
 	
+	/**
+	 * Listens for mouse clicks on the board panel when placing/moving/removing pieces
+	 *
+	 */
 	public class BoardClickListener {
 		private NineMensMorrisPanel panel;
 		private Point prevPoint;
 		
+		/**
+		 * Sets the click listener to listen for mouse clicks on the game board panel
+		 * @param panel - panel to listen for mouse clicks
+		 */
 		public BoardClickListener(NineMensMorrisPanel panel) {
 			this.panel = panel;
 		}
 		
+		/**
+		 * Performs actions a spot on the board is clicked based on current game phase and player
+		 * @param index - the position of the mouse click
+		 */
 		public void boardClicked(int index) {	
 			Point p = SPOT_INDEX_MAP.get(index);
 			switch(panel.logic.getPhase()) {
@@ -115,13 +145,24 @@ public class NineMensMorrisPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Listens for the new game button to be pushed
+	 *
+	 */
 	class NewGameListener implements ActionListener {
 		private NineMensMorrisPanel panel;
 		
+		/**
+		 * Sets the new game listener to listen for new game button pushes on the control board panel
+		 * @param panel - panel to listen for new game button pushes
+		 */
 		public NewGameListener(NineMensMorrisPanel panel) {
 			this.panel = panel;
 		}
 
+		/**
+		 * When new game button pushed, reset everything
+		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			panel.logic = new Logic();

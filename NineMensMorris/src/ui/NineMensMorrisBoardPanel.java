@@ -16,6 +16,10 @@ import javax.swing.JPanel;
 
 import ui.NineMensMorrisPanel.BoardClickListener;
 
+/**
+ * Contains the graphical representation of the 9 mens morris game board
+ *
+ */
 @SuppressWarnings("serial")
 public class NineMensMorrisBoardPanel extends JPanel {
 	private static final Color GRID_COLOR = Color.black;
@@ -51,6 +55,10 @@ public class NineMensMorrisBoardPanel extends JPanel {
 	
 	private final BoardClickListener boardClickListener;
 	
+	/**
+	 * Initializes the game board panel
+	 * @param boardClickListener - listens to clicks on the game board panel
+	 */
 	public NineMensMorrisBoardPanel(BoardClickListener boardClickListener) {
 		setBackground(Color.lightGray);
 		setPreferredSize(new Dimension(200, 200));
@@ -58,6 +66,9 @@ public class NineMensMorrisBoardPanel extends JPanel {
 		this.boardClickListener = boardClickListener;
 	}
 	
+	/**
+	 * Draws the board grid and the pieces as they are placed/moved
+	 */
 	public void paintComponent(Graphics canvas) {
 		super.paintComponent(canvas);
 		Graphics2D canvas2D = (Graphics2D) canvas;
@@ -85,32 +96,67 @@ public class NineMensMorrisBoardPanel extends JPanel {
 		validMoveIndices.forEach(m -> drawCircle(canvas2D, center, GRID_POINTS.get(m), VALID_MOVE_SIZE, scale));
 	}
 	
+	/**
+	 * Draws all of player 1 pieces on game board
+	 * @param pieces
+	 */
 	public void setPlayer1PieceIndices(Collection<Integer> pieces) {
 		this.player1PieceIndices = pieces;
 		repaint();
 	}
 	
+	/**
+	 * Draws all of player 2 pieces on game board
+	 * @param pieces
+	 */
 	public void setPlayer2PieceIndices(Collection<Integer> pieces) {
 		this.player2PieceIndices = pieces;
 		repaint();
 	}
 	
+	/**
+	 * Draws green circles representing valid spaces to move to
+	 * @param moves
+	 */
 	public void setValidMoveIndices(Collection<Integer> moves) {
 		this.validMoveIndices = moves;
 		repaint();
 	}
 	
+	/**
+	 * Draws a line connecting 3 points to create game board grid
+	 * @param canvas - game board
+	 * @param center - center point
+	 * @param start - start point
+	 * @param end - end point
+	 * @param scale - scale of the line drawn
+	 */
 	private void drawLine(Graphics2D canvas, Point center, Point start, Point end, int scale) {
 		canvas.drawLine(center.x + start.x * scale, center.y + start.y * scale, 
 						center.x + end.x * scale, center.y + end.y * scale);
 	}
 	
+	/**
+	 * Draws a square representing points on the game board
+	 * @param canvas - game board
+	 * @param center - center of square
+	 * @param size - size of square
+	 * @param scale - scale of square
+	 */
 	private void drawSquare(Graphics2D canvas, Point center, int size, int scale) {
 		int scaledSize = (int)(size * scale);
 		int half = scaledSize / 2;
 		canvas.drawRect(center.x-half, center.y-half, scaledSize, scaledSize);
 	}
 	
+	/**
+	 * Draws a circle on the game board
+	 * @param canvas - game board
+	 * @param center - center of circle
+	 * @param location - location of circle
+	 * @param size - size of circle
+	 * @param scale - scale of circle
+	 */
 	private void drawCircle(Graphics2D canvas, Point center, Point location, double size, int scale) {
 		int scaledSize = (int)(size * scale);
 		int half = scaledSize / 2;
@@ -120,18 +166,35 @@ public class NineMensMorrisBoardPanel extends JPanel {
 				scaledSize, scaledSize);
 	}
 	
+	/**
+	 * Draws a game piece onto the given space on the board
+	 * @param canvas - game board
+	 * @param center - center of space to place piece
+	 * @param location - location to place piece
+	 * @param scale - scale of piece
+	 */
 	private void drawGamePiece(Graphics2D canvas, Point center, Point location, int scale) {
 		drawCircle(canvas, center, location, GAME_PIECE_SIZE, scale);
 	}
 	
-	
+	/**
+	 * Listens for mouse clicks on the game board
+	 *
+	 */
 	class ClickListener implements MouseListener {
 		private NineMensMorrisBoardPanel panel;
 		
+		/**
+		 * Sets panel to listen to mouse clicks on
+		 * @param panel
+		 */
 		public ClickListener(NineMensMorrisBoardPanel panel) {
 			this.panel = panel;
 		}
 		
+		/**
+		 * Only makes changes to game board when mouse button is released
+		 */
 		public void mouseReleased(MouseEvent e) {	
 			int width = getWidth(), height = getHeight();
 			int scale = Math.min(width, height) / 8;
@@ -143,7 +206,8 @@ public class NineMensMorrisBoardPanel extends JPanel {
 				panel.boardClickListener.boardClicked(gridIndex);
 			}
 		}
-
+		
+		//Not used in this application
 		public void mouseEntered(MouseEvent e) {}
 		public void mouseExited(MouseEvent e) {}
 		public void mousePressed(MouseEvent e) {}

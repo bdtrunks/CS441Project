@@ -13,6 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
+/**
+ * Represents the control panel for 9 men morris game that contains a new game button,
+ * a label representing the current player, and game instructions
+ *
+ */
 @SuppressWarnings("serial")
 public class NineMensMorrisControlsPanel extends JPanel {
 	private static final Color[] PLAYER_COLOR = {null, NineMensMorrisBoardPanel.PLAYER_1_COLOR, 
@@ -21,6 +26,10 @@ public class NineMensMorrisControlsPanel extends JPanel {
 	private JTextArea instructionsTextArea;
 	private JButton	  newGameButton;
 	
+	/**
+	 * Creates the controls panel
+	 * @param newGameListener - fires when new game button is hit to start new game
+	 */
 	public NineMensMorrisControlsPanel(ActionListener newGameListener) {
 		setPreferredSize(new Dimension(220, 55));
 		setLayout(new GridBagLayout());
@@ -70,11 +79,19 @@ public class NineMensMorrisControlsPanel extends JPanel {
 		setInstructions(1);
 	}
 	
+	/**
+	 * Sets the player label to the current player
+	 * @param player - current player
+	 */
 	public void setPlayerLabel(int player) {
 		playerLabel.setText("Player " + player);
 		playerLabel.setForeground(PLAYER_COLOR[player]);
 	}
 	
+	/**
+	 * Shows the instructions for the players given the current phase
+	 * @param phase - current game phase
+	 */
 	public void setInstructions(int phase) {
 		switch(phase) {
 			case 1: // place piece
