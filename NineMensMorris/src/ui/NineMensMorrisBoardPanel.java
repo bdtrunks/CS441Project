@@ -23,8 +23,8 @@ public class NineMensMorrisBoardPanel extends JPanel {
 	private static final double GRID_POINT_SIZE = 0.18;
 	
 	private static final double GAME_PIECE_SIZE = 0.6;
-	private static final Color PLAYER_1_COLOR = Color.decode("#09347A");
-	private static final Color PLAYER_2_COLOR = Color.decode("#F1632A");
+	protected static final Color PLAYER_1_COLOR = Color.decode("#09347A");
+	protected static final Color PLAYER_2_COLOR = Color.decode("#F1632A");
 	
 	private static final double VALID_MOVE_SIZE = 0.3;
 	private static final Color VALID_MOVE_COLOR = Color.decode("#13A558");

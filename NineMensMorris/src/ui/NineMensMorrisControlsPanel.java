@@ -15,8 +15,8 @@ import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class NineMensMorrisControlsPanel extends JPanel {
-	private static final Color[] PLAYER_COLOR = {null, Color.decode("#09347A"), Color.decode("#F1632A")};
-	
+	private static final Color[] PLAYER_COLOR = {null, NineMensMorrisBoardPanel.PLAYER_1_COLOR, 
+													NineMensMorrisBoardPanel.PLAYER_2_COLOR};
 	private JLabel playerLabel;
 	private JTextArea instructions;
 	private JButton newGameButton;
