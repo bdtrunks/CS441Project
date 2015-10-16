@@ -1,4 +1,5 @@
 package logic;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,7 +13,7 @@ public class Logic {
 	private boolean[][] emptySpaces;
 	private int playerTurn;
 	private int phase; // phase 1 place pieces, phase 2 move pieces, phase 3
-						// remove opponent
+						// remove opponent, phase 4 game over
 	private int piecesPlaced;
 	private Board board;
 	private int playerWon;
@@ -34,7 +35,7 @@ public class Logic {
 		piecesPlaced = 0;
 	}
 
-	private void setPlayer() {
+	public void setPlayer() {
 		if (playerTurn == 1) {
 			playerTurn = 2;
 		} else {
@@ -78,6 +79,14 @@ public class Logic {
 		return new ArrayList<Point>(playerTwoPieces);
 	}
 
+	public void addPlayerOnePieces(Point add) {
+		playerOnePieces.add(add);
+	}
+
+	public void addPlayerTwoPieces(Point add) {
+		playerTwoPieces.add(add);
+	}
+
 	public Collection<Point> checkMoves(int square, int point) {
 		Collection<Point> result = new LinkedList<Point>();
 		if (phase != 2) {
@@ -86,6 +95,20 @@ public class Logic {
 		if (board.getBoardNode(square, point) != playerTurn) {
 			return result;
 		}
+
+		if (checkFly(playerTurn)) {
+			Point add;
+			for (int x = 0; x < 3; x++) {
+				for (int y = 0; y < 8; y++) {
+					if (board.getBoardNode(x, y) == 0) {
+						add = new Point(x, y);
+						result.add(add);
+					}
+				}
+			}
+			return result;
+		}
+
 		if (point % 2 == 0) {
 			if (board.getBoardNode(square, ((point + 1) % 8)) == 0) {
 				Point add = new Point(square, ((point + 1) % 8));
@@ -145,6 +168,16 @@ public class Logic {
 		return result;
 	}
 
+	public boolean checkFly(int player) {
+		if (player == 1 & playerOnePieces.size() == 3) {
+			return true;
+		}
+		if (player == 2 & playerTwoPieces.size() == 3) {
+			return true;
+		}
+		return false;
+	}
+
 	public boolean placePiece(int square, int point) {
 		if (board.getBoardNode(square, point) == 0) {
 			board.setBoardNode(square, point, playerTurn);
@@ -156,13 +189,14 @@ public class Logic {
 			}
 			if (board.checkMill(square, point, playerTurn)) {
 				phase = 3;
+				piecesPlaced++;
 			} else {
 				setPlayer();
-			}
-			piecesPlaced++;
-			if (piecesPlaced == 18) {
-				checkWin();
-				phase = 2;
+				piecesPlaced++;
+				if (piecesPlaced == 18) {
+					checkWin();
+					phase = 2;
+				}
 			}
 			return true;
 		}
@@ -189,8 +223,9 @@ public class Logic {
 				phase = 3;
 			} else {
 				setPlayer();
+				checkWin();
 			}
-			checkWin();
+
 			return true;
 		}
 
@@ -199,11 +234,11 @@ public class Logic {
 
 	public boolean removePiece(int square, int point) {
 		if (playerTurn == 1)
-			return remove(square,point,2,playerTwoPieces);
+			return remove(square, point, 2, playerTwoPieces);
 		else
-			return remove(square,point,1,playerOnePieces);
+			return remove(square, point, 1, playerOnePieces);
 	}
-	
+
 	public boolean remove(int square, int point, int player, List<Point> playerPieces) {
 		Point remove = new Point(square, point);
 		if (board.getBoardNode(square, point) == player) {
@@ -211,23 +246,51 @@ public class Logic {
 				board.setBoardNode(square, point, 0);
 				playerPieces.remove(remove);
 				setPlayer();
-				if (piecesPlaced == 18)
+
+				if (piecesPlaced == 18) {
 					phase = 2;
-				else
+					checkWin();
+				} else
 					phase = 1;
 				return true;
 			}
+
+			for (Point test : playerPieces) {
+				if (!board.checkMill(test.x, test.y, player)) {
+					return false;
+				}
+			}
+			board.setBoardNode(square, point, 0);
+			playerPieces.remove(remove);
+			setPlayer();
+
+			if (piecesPlaced == 18) {
+				phase = 2;
+				checkWin();
+			} else
+				phase = 1;
+			return true;
+
 		}
 		return false;
+
 	}
 
 	public void checkWin() {
-			if (isLoser(playerOnePieces))
+		if (playerTurn == 1) {
+			if (isLoser(playerOnePieces)) {
 				playerWon = 2;
-			if (isLoser(playerTwoPieces))
+				phase = 4;
+			}
+		}
+		if (playerTurn == 2) {
+			if (isLoser(playerTwoPieces)) {
 				playerWon = 1;
+				phase = 4;
+			}
+		}
 	}
-	
+
 	public boolean isLoser(List<Point> playerPieces) {
 		if (playerPieces.size() < 3) {
 			return true;
@@ -242,9 +305,9 @@ public class Logic {
 		}
 		return true;
 	}
-	
+
 	public int getWinner() {
 		return playerWon;
 	}
-	
+
 }
