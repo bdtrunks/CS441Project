@@ -3,8 +3,10 @@ package test;
 import static org.junit.Assert.*;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import org.junit.Test;
@@ -21,7 +23,43 @@ import logic.Node;
  */
 public class LogicTest {
 
-	// *****************************************NODE TESTS*******************************************
+	// *****************************************MUTATOR
+	// TESTS***************************************
+	@Test
+	public void mutatorTests() {
+		Logic testLogic = new Logic();
+		Board expectedBoard = new Board();
+		List<Point> expectedOnePieces = new ArrayList<Point>();
+		List<Point> expectedTwoPieces = new ArrayList<Point>();
+		int nodeCountX;
+		int nodeCountY;
+		for (nodeCountY = 0; nodeCountY < 3; nodeCountY++) {
+			for (nodeCountX = 0; nodeCountX < 8; nodeCountX++) {
+				assertEquals(expectedBoard.getBoardNode(nodeCountY, nodeCountX),
+						testLogic.getBoard().getBoardNode(nodeCountY, nodeCountX));
+			}
+		}
+		assertEquals(1, testLogic.getPhase());
+		assertEquals(1, testLogic.getPlayer());
+		testLogic.setPlayer();
+		assertEquals(2, testLogic.getPlayer());
+		testLogic.setPlayer();
+		assertEquals(1, testLogic.getPlayer());
+		assertEquals(0, testLogic.getPlayerOnePiece());
+		assertEquals(0, testLogic.getPlayerTwoPiece());
+		assertEquals(expectedOnePieces, testLogic.getPlayerOnePieces());
+		assertEquals(expectedTwoPieces, testLogic.getPlayerTwoPieces());
+		testLogic.checkWin();
+		assertTrue(testLogic.isLoser(testLogic.getPlayerOnePieces()));
+		testLogic.setPlayer();
+		testLogic.checkWin();
+		assertTrue(testLogic.isLoser(testLogic.getPlayerTwoPieces()));
+		assertEquals(1, testLogic.getWinner());
+
+	}
+
+	// *****************************************NODE
+	// TESTS*******************************************
 	@Test
 	public void NodeCreateTest() {
 		boolean nodeTest = true;
@@ -55,7 +93,8 @@ public class LogicTest {
 		assertEquals(0, node.getPlayer());
 	}
 
-	// ***************************************BOARD TESTS*********************************************
+	// ***************************************BOARD
+	// TESTS*********************************************
 	@Test
 	public void BoardCreateTest() {
 		boolean boardTest = true;
@@ -264,7 +303,8 @@ public class LogicTest {
 		}
 	}
 
-	// ******************************************LOGIC TESTS******************************************
+	// ******************************************LOGIC
+	// TESTS******************************************
 	@Test
 	public void LogicCreateTest() {
 		boolean pass = true;
@@ -580,6 +620,28 @@ public class LogicTest {
 		expected.add(new Point(1, 7));
 		assertEquals(expected, moves);
 	}
+	
+	@Test
+	public void LogicCheckMovesTestWrongPhase() {
+		Logic logic = new Logic();
+		logic.setPhase(1);
+		logic.setBoardNode(0, 0, 1);
+		Collection<Point> moves = logic.checkMoves(0, 0);
+		Collection<Point> expected = new LinkedList<Point>();
+		assertEquals(expected, moves);
+	}
+	
+	@Test
+	public void LogicCheckMovesTestWrongPlayer() {
+		Logic logic = new Logic();
+		logic.setPhase(2);
+		logic.setBoardNode(0, 0, 1);
+		logic.setPlayer();
+		Collection<Point> moves = logic.checkMoves(0, 0);
+		Collection<Point> expected = new LinkedList<Point>();
+		assertEquals(expected, moves);
+	}
+
 	@Test
 	public void playerOneFlyTest03() {
 		Logic logic = new Logic();
@@ -592,42 +654,43 @@ public class LogicTest {
 		logic.setBoardNode(1, 6, 2);
 		logic.setBoardNode(1, 7, 2);
 		logic.setBoardNode(2, 1, 2);
-		Point add = new Point(0,0);
+		Point add = new Point(0, 0);
 		logic.addPlayerOnePieces(add);
-		add = new Point (0,2);
+		add = new Point(0, 2);
 		logic.addPlayerOnePieces(add);
-		add = new Point (0,3);
+		add = new Point(0, 3);
 		logic.addPlayerOnePieces(add);
-		add = new Point (1,2);
+		add = new Point(1, 2);
 		logic.addPlayerTwoPieces(add);
-		add = new Point (1,4);
+		add = new Point(1, 4);
 		logic.addPlayerTwoPieces(add);
-		add = new Point (1,6);
+		add = new Point(1, 6);
 		logic.addPlayerTwoPieces(add);
-		add = new Point (1,7);
+		add = new Point(1, 7);
 		logic.addPlayerTwoPieces(add);
-		add = new Point (2,1);
+		add = new Point(2, 1);
 		logic.addPlayerTwoPieces(add);
 		Collection<Point> moves = logic.checkMoves(0, 3);
 		Collection<Point> expected = new LinkedList<Point>();
-		expected.add(new Point(0,1));
-		expected.add(new Point(0,4));
-		expected.add(new Point(0,5));
-		expected.add(new Point(0,6));
-		expected.add(new Point(0,7));
-		expected.add(new Point(1,0));
-		expected.add(new Point(1,1));
-		expected.add(new Point(1,3));
-		expected.add(new Point(1,5));
-		expected.add(new Point(2,0));
-		expected.add(new Point(2,2));
-		expected.add(new Point(2,3));
-		expected.add(new Point(2,4));
-		expected.add(new Point(2,5));
-		expected.add(new Point(2,6));
-		expected.add(new Point(2,7));
+		expected.add(new Point(0, 1));
+		expected.add(new Point(0, 4));
+		expected.add(new Point(0, 5));
+		expected.add(new Point(0, 6));
+		expected.add(new Point(0, 7));
+		expected.add(new Point(1, 0));
+		expected.add(new Point(1, 1));
+		expected.add(new Point(1, 3));
+		expected.add(new Point(1, 5));
+		expected.add(new Point(2, 0));
+		expected.add(new Point(2, 2));
+		expected.add(new Point(2, 3));
+		expected.add(new Point(2, 4));
+		expected.add(new Point(2, 5));
+		expected.add(new Point(2, 6));
+		expected.add(new Point(2, 7));
 		assertEquals(expected, moves);
 	}
+
 	@Test
 	public void playerTwoFlyTest03() {
 		Logic logic = new Logic();
@@ -641,41 +704,75 @@ public class LogicTest {
 		logic.setBoardNode(1, 6, 1);
 		logic.setBoardNode(1, 7, 1);
 		logic.setBoardNode(2, 1, 1);
-		Point add = new Point(0,0);
+		Point add = new Point(0, 0);
 		logic.addPlayerTwoPieces(add);
-		add = new Point (0,2);
+		add = new Point(0, 2);
 		logic.addPlayerTwoPieces(add);
-		add = new Point (0,3);
+		add = new Point(0, 3);
 		logic.addPlayerTwoPieces(add);
-		add = new Point (1,2);
+		add = new Point(1, 2);
 		logic.addPlayerOnePieces(add);
-		add = new Point (1,4);
+		add = new Point(1, 4);
 		logic.addPlayerOnePieces(add);
-		add = new Point (1,6);
+		add = new Point(1, 6);
 		logic.addPlayerOnePieces(add);
-		add = new Point (1,7);
+		add = new Point(1, 7);
 		logic.addPlayerOnePieces(add);
-		add = new Point (2,1);
+		add = new Point(2, 1);
 		logic.addPlayerOnePieces(add);
 		Collection<Point> moves = logic.checkMoves(0, 3);
 		Collection<Point> expected = new LinkedList<Point>();
-		expected.add(new Point(0,1));
-		expected.add(new Point(0,4));
-		expected.add(new Point(0,5));
-		expected.add(new Point(0,6));
-		expected.add(new Point(0,7));
-		expected.add(new Point(1,0));
-		expected.add(new Point(1,1));
-		expected.add(new Point(1,3));
-		expected.add(new Point(1,5));
-		expected.add(new Point(2,0));
-		expected.add(new Point(2,2));
-		expected.add(new Point(2,3));
-		expected.add(new Point(2,4));
-		expected.add(new Point(2,5));
-		expected.add(new Point(2,6));
-		expected.add(new Point(2,7));
+		expected.add(new Point(0, 1));
+		expected.add(new Point(0, 4));
+		expected.add(new Point(0, 5));
+		expected.add(new Point(0, 6));
+		expected.add(new Point(0, 7));
+		expected.add(new Point(1, 0));
+		expected.add(new Point(1, 1));
+		expected.add(new Point(1, 3));
+		expected.add(new Point(1, 5));
+		expected.add(new Point(2, 0));
+		expected.add(new Point(2, 2));
+		expected.add(new Point(2, 3));
+		expected.add(new Point(2, 4));
+		expected.add(new Point(2, 5));
+		expected.add(new Point(2, 6));
+		expected.add(new Point(2, 7));
 		assertEquals(expected, moves);
 	}
 
+	@Test
+	public void LogicTestPlacePiece() {
+		Logic logic = new Logic();
+		logic.placePiece(0, 0);
+		logic.placePiece(0, 1);
+		assertEquals(1,logic.getBoard().getBoardNode(0,0));
+		assertEquals(2,logic.getBoard().getBoardNode(0, 1));
+		logic.placePiece(0, 7);
+		logic.placePiece(0, 2);
+		logic.placePiece(0, 6);
+		assertEquals(3,logic.getPhase());
+		logic.placePiece(0, 3);
+		logic.placePiece(0, 4);
+		logic.placePiece(0, 5);
+		logic.placePiece(1, 0);
+		logic.placePiece(1, 1);
+		logic.placePiece(1, 2);
+		logic.placePiece(1, 3);
+		logic.placePiece(1, 4);
+		logic.placePiece(1, 5);
+		logic.placePiece(1, 6);
+		logic.placePiece(1, 7);
+		logic.placePiece(2, 0);
+		logic.placePiece(2, 1);
+		assertEquals(2, logic.getPhase());
+		
+	}
+	
+	@Test
+	public void LogicTestInvalidPlacePiece(){
+		Logic logic = new Logic();
+		logic.placePiece(0, 0);
+		assertFalse(logic.placePiece(0, 0));
+	}
 }
