@@ -264,8 +264,8 @@ public class Logic {
 				setPlayer();
 				piecesPlaced++;
 				if (piecesPlaced == 18) {
-					checkWin();
 					phase = 2;
+					checkWin();
 				}
 			}
 			return true;
