@@ -775,4 +775,304 @@ public class LogicTest {
 		logic.placePiece(0, 0);
 		assertFalse(logic.placePiece(0, 0));
 	}
+	
+	@Test
+	public void LogicTestPlayerOneMovePiece(){
+		Logic logic = new Logic();
+		logic.placePiece(0, 0);
+		logic.placePiece(0, 2);
+		logic.placePiece(0, 3);
+		logic.placePiece(0, 4);
+		logic.placePiece(0, 5);
+		logic.placePiece(0, 6);
+		logic.placePiece(0, 7);
+		logic.placePiece(1, 0);
+		logic.placePiece(1, 1);
+		logic.placePiece(1, 2);
+		logic.placePiece(1, 3);
+		logic.placePiece(1, 4);
+		logic.placePiece(1, 5);
+		logic.placePiece(1, 6);
+		logic.placePiece(1, 7);
+		logic.placePiece(2, 0);
+		logic.placePiece(2, 1);
+		logic.placePiece(2, 2);
+		assertTrue(logic.movePiece(0, 0, 0, 1));
+	}
+	
+	@Test
+	public void LogicTestPlayerTwoMovePiece(){
+		Logic logic = new Logic();
+		logic.placePiece(0, 0);
+		logic.placePiece(0, 2);
+		logic.placePiece(0, 3);
+		logic.placePiece(0, 4);
+		logic.placePiece(0, 5);
+		logic.placePiece(0, 6);
+		logic.placePiece(0, 7);
+		logic.placePiece(1, 1);
+		logic.placePiece(1, 0);
+		logic.placePiece(1, 2);
+		logic.placePiece(1, 3);
+		logic.placePiece(1, 4);
+		logic.placePiece(1, 5);
+		logic.placePiece(1, 6);
+		logic.placePiece(1, 7);
+		logic.placePiece(2, 0);
+		logic.placePiece(2, 1);
+		logic.placePiece(2, 2);
+		logic.movePiece(0, 0, 0, 1);
+		assertTrue(logic.movePiece(2, 2, 2, 3));
+	}
+	
+	@Test
+	public void LogicTestInvalidMovePiece(){
+		Logic logic = new Logic();
+		logic.placePiece(0, 0);
+		logic.placePiece(0, 2);
+		logic.placePiece(0, 3);
+		logic.placePiece(0, 4);
+		logic.placePiece(0, 5);
+		logic.placePiece(0, 6);
+		logic.placePiece(0, 7);
+		logic.placePiece(1, 0);
+		logic.placePiece(1, 1);
+		logic.placePiece(1, 2);
+		logic.placePiece(1, 3);
+		logic.placePiece(1, 4);
+		logic.placePiece(1, 5);
+		logic.placePiece(1, 6);
+		logic.placePiece(1, 7);
+		logic.placePiece(2, 0);
+		logic.placePiece(2, 1);
+		logic.placePiece(2, 2);
+		assertFalse(logic.movePiece(0, 2, 0, 3));
+	}
+	
+	@Test
+	public void LogicTestInvalidMovePiece2(){
+		Logic logic = new Logic();
+		logic.placePiece(0, 0);
+		logic.placePiece(0, 2);
+		logic.placePiece(0, 3);
+		logic.placePiece(0, 4);
+		logic.placePiece(0, 5);
+		logic.placePiece(0, 6);
+		logic.placePiece(0, 7);
+		logic.placePiece(1, 0);
+		logic.placePiece(1, 1);
+		logic.placePiece(1, 2);
+		logic.placePiece(1, 3);
+		logic.placePiece(1, 4);
+		logic.placePiece(1, 5);
+		logic.placePiece(1, 6);
+		logic.placePiece(1, 7);
+		logic.placePiece(2, 0);
+		logic.placePiece(2, 1);
+		logic.placePiece(2, 2);
+		assertFalse(logic.movePiece(0, 0, 2, 3));
+	}
+	
+	@Test
+	public void LogicTestPlayerOneRemovePiecePhase2(){
+		Logic logic = new Logic();
+		logic.placePiece(0, 0);
+		logic.placePiece(0, 2);
+		logic.placePiece(0, 3);
+		logic.placePiece(0, 4);
+		logic.placePiece(0, 5);
+		logic.placePiece(0, 6);
+		logic.placePiece(0, 7);
+		logic.placePiece(1, 0);
+		logic.placePiece(1, 1);
+		logic.placePiece(1, 2);
+		logic.placePiece(1, 3);
+		logic.placePiece(1, 4);
+		logic.placePiece(1, 5);
+		logic.placePiece(1, 6);
+		logic.placePiece(1, 7);
+		logic.placePiece(2, 0);
+		logic.placePiece(2, 1);
+		logic.placePiece(2, 2);
+		assertTrue(logic.removePiece(0, 2));
+	}
+	
+	@Test
+	public void LogicTestPlayerOneRemovePiecePhase1(){
+		Logic logic = new Logic();
+		logic.placePiece(0, 0);
+		logic.placePiece(0, 2);
+		assertTrue(logic.removePiece(0, 2));
+	}
+	
+	@Test
+	public void LogicTestPlayerTwoRemovePiecePhase2(){
+		Logic logic = new Logic();
+		logic.placePiece(0, 0);
+		logic.placePiece(0, 2);
+		logic.placePiece(0, 3);
+		logic.placePiece(0, 4);
+		logic.placePiece(0, 5);
+		logic.placePiece(0, 6);
+		logic.placePiece(0, 7);
+		logic.placePiece(1, 0);
+		logic.placePiece(1, 1);
+		logic.placePiece(1, 2);
+		logic.placePiece(1, 3);
+		logic.placePiece(1, 4);
+		logic.placePiece(1, 5);
+		logic.placePiece(1, 6);
+		logic.placePiece(1, 7);
+		logic.placePiece(2, 0);
+		logic.placePiece(2, 1);
+		logic.placePiece(2, 2);
+		logic.removePiece(0, 2);
+		assertTrue(logic.removePiece(0, 0));
+	}
+	
+	@Test
+	public void LogicTestPlayerTwoRemovePiecePhase1(){
+		Logic logic = new Logic();
+		logic.placePiece(0, 0);
+		logic.placePiece(0, 2);
+		logic.placePiece(0, 3);
+		assertTrue(logic.removePiece(0, 3));
+	}
+	
+	@Test
+	public void LogicTestPlayerOneRemovePiecePhase1Mill(){
+		Logic logic = new Logic();
+		logic.placePiece(0, 0);
+		logic.placePiece(0, 6);
+		logic.placePiece(0, 1);
+		logic.placePiece(0, 5);
+		logic.placePiece(0, 3);
+		logic.placePiece(1, 0);
+		logic.placePiece(1, 2);
+		logic.placePiece(0, 4);
+		logic.removePiece(1, 2);
+		logic.placePiece(0, 2);
+		assertFalse(logic.removePiece(0, 6));
+	}
+	
+	@Test
+	public void LogicTestPlayerTwoRemovePiecePhase1Mill(){
+		Logic logic = new Logic();
+		logic.placePiece(0, 0);
+		logic.placePiece(0, 6);
+		logic.placePiece(0, 1);
+		logic.placePiece(0, 5);
+		logic.placePiece(0, 3);
+		logic.placePiece(1, 0);
+		logic.placePiece(1, 2);
+		logic.placePiece(0, 4);
+		logic.removePiece(1, 2);
+		logic.placePiece(0, 2);
+		logic.removePiece(0, 6);
+		logic.placePiece(0, 6);
+		assertFalse(logic.removePiece(0, 0));
+	}
+	
+	@Test
+	public void LogicTestPlayerOneRemovePiecePhase1OnlyMill(){
+		Logic logic = new Logic();
+		logic.placePiece(0, 0);
+		logic.placePiece(0, 6);
+		logic.placePiece(0, 1);
+		logic.placePiece(0, 5);
+		logic.placePiece(0, 3);
+		logic.placePiece(0, 4);
+		logic.removePiece(0, 3);
+		logic.placePiece(0, 2);
+		assertTrue(logic.removePiece(0, 6));
+	}
+	
+	@Test
+	public void LogicTestPlayerOneRemovePiecePhase1OverlapMills(){
+		Logic logic = new Logic();
+		logic.placePiece(0, 0);
+		logic.placePiece(1, 2);
+		logic.placePiece(0, 1);
+		logic.placePiece(1, 4);
+		logic.placePiece(1, 0);
+		logic.placePiece(2, 3);
+		logic.placePiece(1, 1);
+		logic.placePiece(0, 3);
+		logic.placePiece(1, 7);
+		logic.placePiece(1, 3);
+		logic.removePiece(1, 0);
+		logic.placePiece(0, 2);
+		assertTrue(logic.removePiece(1, 3));
+	}
+	
+	@Test
+	public void LogicTestPlayerOneRemovePiecePhase2OverlapMills(){
+		Logic logic = new Logic();
+		logic.placePiece(0, 0); //1
+		logic.placePiece(1, 2); //2
+		logic.placePiece(0, 1); //1
+		logic.placePiece(1, 4); //2
+		logic.placePiece(1, 0); //1
+		logic.placePiece(2, 3); //2
+		logic.placePiece(1, 1); //1
+		logic.placePiece(0, 3); //2
+		logic.placePiece(1, 7); //1
+		logic.placePiece(0, 6); //2
+		logic.placePiece(2, 2); //1
+		logic.placePiece(0, 4); //2
+		logic.placePiece(1, 5); //1
+		logic.placePiece(2, 0); //2
+		logic.placePiece(2, 6); //1
+		logic.placePiece(2, 1); //2
+		logic.placePiece(2, 4); //1
+		logic.placePiece(1, 3); //2
+		logic.removePiece(1, 0); //2 remove 1
+		logic.movePiece(1, 5, 2, 5); //1
+		logic.removePiece(2, 0); //1 remove 2
+		logic.movePiece(0, 6, 0, 5); //2
+		logic.movePiece(2, 5, 1, 5); //1
+		logic.movePiece(0, 5, 0, 6); //2
+		logic.movePiece(1, 5, 2, 5); //1
+		logic.removePiece(2, 1); //1 remove 2
+		logic.movePiece(0, 6, 0, 5); //2
+		logic.movePiece(2, 5, 1, 5); //1
+		logic.movePiece(0, 5, 0, 6); //2
+		logic.movePiece(1, 5, 2, 5); //1
+		logic.removePiece(0, 4); //1 remove 2
+		logic.movePiece(0, 6, 0, 5); //2
+		logic.movePiece(2, 5, 1, 5); //1
+		logic.movePiece(0, 5, 0, 6); //2
+		logic.movePiece(1, 5, 2, 5); //1
+		logic.removePiece(0, 6); //1 remove 2
+		logic.movePiece(0, 3, 0, 4); //2
+		logic.movePiece(2, 5, 1, 5); //1
+		logic.movePiece(0, 4, 0, 3); //2
+		logic.removePiece(0, 0); //2 remove 1
+		logic.movePiece(1, 5, 2, 5); //1
+		assertTrue(logic.removePiece(1, 3)); //1 remove 2
+	}
+	
+	@Test
+	public void LogicTestLoserNoValidMoves(){
+		Logic logic = new Logic();
+		Board board = logic.getBoard();
+		logic.addPlayerOnePieces(new Point(0, 0));
+		board.setBoardNode(0, 0, 1);
+		logic.addPlayerOnePieces(new Point(0, 1));
+		board.setBoardNode(0, 1, 1);
+		logic.addPlayerOnePieces(new Point(1, 0));
+		board.setBoardNode(1, 0, 1);
+		logic.addPlayerOnePieces(new Point(0, 7));
+		board.setBoardNode(0, 7, 1);
+		logic.addPlayerTwoPieces(new Point(0, 2));
+		board.setBoardNode(0, 2, 2);
+		logic.addPlayerTwoPieces(new Point(1, 1));
+		board.setBoardNode(1, 1, 2);
+		logic.addPlayerTwoPieces(new Point(0, 6));
+		board.setBoardNode(0, 6, 2);
+		logic.addPlayerTwoPieces(new Point(1, 7));
+		board.setBoardNode(1, 7, 2);
+		logic.setPhase(2);
+		assertTrue(logic.isLoser(logic.getPlayerOnePieces()));
+	}
 }
