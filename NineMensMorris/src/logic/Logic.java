@@ -15,7 +15,7 @@ import java.util.List;
 public class Logic {
 	private List<Point> playerOnePieces;
 	private List<Point> playerTwoPieces;
-	private boolean[][] emptySpaces;
+	private List<Point> emptySpaces;
 	private int playerTurn;
 	private int phase; // phase 1 place pieces, phase 2 move pieces, phase 3
 						// remove opponent, phase 4 game over
@@ -27,10 +27,10 @@ public class Logic {
 	 * Initialize Logic by starting with player 1 and creating a clear board
 	 */
 	public Logic() {
-		emptySpaces = new boolean[3][8];
-		for (int i = 0; i < 2; i++) {
-			for (int j = 0; j < 8; j++) {
-				emptySpaces[i][j] = true;
+		for(int x=0;x<2;x++){
+			for(int y=0;y<7;y++){
+				Point point = new Point(x,y);
+				emptySpaces.add(point);
 			}
 		}
 		playerOnePieces = new LinkedList<Point>();
@@ -257,6 +257,7 @@ public class Logic {
 			} else {
 				playerTwoPieces.add(add);
 			}
+			emptySpaces.remove(add);
 			if (board.checkMill(square, point, playerTurn)) {
 				phase = 3;
 				piecesPlaced++;
@@ -290,13 +291,16 @@ public class Logic {
 		if (moves.contains(check)) {
 			board.setBoardNode(square, point, 0);
 			board.setBoardNode(moveSquare, movePoint, playerTurn);
+			Point remove = new Point(moveSquare,movePoint);
 			if (playerTurn == 1) {
-				playerOnePieces.remove(new Point(square, point));
-				playerOnePieces.add(new Point(moveSquare, movePoint));
+				playerOnePieces.remove(check);
+				playerOnePieces.add(remove);
 			} else {
-				playerTwoPieces.remove(new Point(square, point));
-				playerTwoPieces.add(new Point(moveSquare, movePoint));
+				playerTwoPieces.remove(check);
+				playerTwoPieces.add(remove);
 			}
+			emptySpaces.remove(remove);
+			emptySpaces.add(check);
 			if (board.checkMill(moveSquare, movePoint, playerTurn)) {
 				phase = 3;
 			} else {
@@ -335,6 +339,7 @@ public class Logic {
 			if (!board.checkMill(square, point, player) || playerPieces.size() <= 3) {
 				board.setBoardNode(square, point, 0);
 				playerPieces.remove(remove);
+				emptySpaces.add(remove);
 				setPlayer();
 
 				if (piecesPlaced == 18) {
