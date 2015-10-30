@@ -9,10 +9,9 @@ import java.awt.Point;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
+import AI.AI;
 import logic.Logic;
 
 /**
@@ -24,7 +23,7 @@ import logic.Logic;
 public class NineMensMorrisPanel extends JPanel {
 	private NineMensMorrisBoardPanel boardPanel;
 	private NineMensMorrisControlsPanel controlsPanel;
-	private Logic logic;
+	private Logic logic; private boolean useAI;
 	
 	//List of all possible game positions
 	private static final List<Point> SPOT_INDEX_MAP = Arrays.asList(
@@ -42,6 +41,7 @@ public class NineMensMorrisPanel extends JPanel {
 	 */
 	public NineMensMorrisPanel () {
 		this.logic = new Logic();
+		this.useAI = false;
 		
 		setPreferredSize(new Dimension(720, 500));
 		setLayout(new GridBagLayout());
@@ -117,26 +117,40 @@ public class NineMensMorrisPanel extends JPanel {
 		 * Performs actions a spot on the board is clicked based on current game phase and player
 		 * @param index - the position of the mouse click
 		 */
-		public void boardClicked(int index) {	
+		public void boardClicked(int index) {
+			boolean ai = false;
 			Point p = SPOT_INDEX_MAP.get(index);
+			
 			switch(panel.logic.getPhase()) {
 				case 1: // place piece
-					panel.logic.placePiece(p.x, p.y);
+					if (panel.logic.placePiece(p.x, p.y))
+						ai = useAI;
 					break;
 				case 2: // move piece
 					if (prevPoint != null && logic.movePiece(prevPoint.x, prevPoint.y, p.x, p.y)) {
 						prevPoint = null;
 						panel.setValidMoves(Collections.emptyList());
+						ai = useAI;
 					} else {
 						prevPoint = p;
 						panel.setValidMoves(panel.logic.checkMoves(p.x, p.y));
 					}
 					break;	
 				case 3: // remove piece
-					panel.logic.removePiece(p.x, p.y);
+					if (panel.logic.removePiece(p.x, p.y))
+						ai = useAI;
 					break;
 			}
 			
+			updateBoard();
+			
+			if (ai) {
+				new AI().turn(panel.logic);
+				updateBoard();
+			}
+		}
+		
+		private void updateBoard() {
 			panel.setPlayerPieces(1, panel.logic.getPlayerOnePieces());
 			panel.setPlayerPieces(2, panel.logic.getPlayerTwoPieces());
 			
@@ -149,7 +163,7 @@ public class NineMensMorrisPanel extends JPanel {
 	 * Listens for the new game button to be pushed
 	 *
 	 */
-	class NewGameListener implements ActionListener {
+	public class NewGameListener {
 		private NineMensMorrisPanel panel;
 		
 		/**
@@ -163,9 +177,9 @@ public class NineMensMorrisPanel extends JPanel {
 		/**
 		 * When new game button pushed, reset everything
 		 */
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
+		public void newGame(boolean useAI) {
 			panel.logic = new Logic();
+			panel.useAI = useAI;
 			panel.controlsPanel.setPlayerLabel(logic.getPlayer());
 			panel.controlsPanel.setInstructions(logic.getPhase());
 			panel.setPlayerPieces(1, Collections.emptyList());

@@ -27,6 +27,7 @@ public class Logic {
 	 * Initialize Logic by starting with player 1 and creating a clear board
 	 */
 	public Logic() {
+		emptySpaces = new LinkedList<>();
 		for(int x=0;x<2;x++){
 			for(int y=0;y<7;y++){
 				Point point = new Point(x,y);

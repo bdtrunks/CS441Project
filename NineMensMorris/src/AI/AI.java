@@ -17,11 +17,6 @@ public class AI {
 	}
 	
 	public boolean turn(Logic logic) {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		if (logic.getPlayer() != 2)
 			return false;
 		List<Point> emptySpaces = logic.getEmptySpaces();
@@ -38,11 +33,15 @@ public class AI {
 			System.out.println("places size = " + places.size());
 			move = (Point) places.toArray()[rand.nextInt(places.size())];
 			System.out.println(Arrays.toString(places.toArray()));
+			
+			pause();
 			logic.movePiece(piece.x, piece.y, move.x, move.y);
 		}
 		
 		if (logic.getPhase() == 1) {
 			Point move = emptySpaces.get(rand.nextInt(emptySpaces.size()));
+			
+			pause();
 			logic.placePiece(move.x, move.y);
 		}
 		
@@ -50,12 +49,22 @@ public class AI {
 		if (logic.getPhase() == 3) {
 			List<Point> playerPieces = logic.getPlayerOnePieces();
 			Point remove;
+			
+			pause();
 			do {
 				remove = playerPieces.get(rand.nextInt(playerPieces.size()));
 				System.out.println("remove = " + remove);
 			} while (!logic.removePiece(remove.x, remove.y));
 		}
 		return true;
+	}
+	
+	private void pause() {
+//		try {
+//			//Thread.sleep(3000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 }
