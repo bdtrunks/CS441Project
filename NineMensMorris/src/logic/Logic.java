@@ -296,16 +296,16 @@ public class Logic {
 		if (moves.contains(check)) {
 			board.setBoardNode(square, point, 0);
 			board.setBoardNode(moveSquare, movePoint, playerTurn);
-			Point remove = new Point(moveSquare,movePoint);
+			Point remove = new Point(square,point);
 			if (playerTurn == 1) {
-				playerOnePieces.remove(check);
-				playerOnePieces.add(remove);
+				playerOnePieces.remove(remove);
+				playerOnePieces.add(check);
 			} else {
-				playerTwoPieces.remove(check);
-				playerTwoPieces.add(remove);
+				playerTwoPieces.remove(remove);
+				playerTwoPieces.add(check);
 			}
-			emptySpaces.remove(remove);
-			emptySpaces.add(check);
+			emptySpaces.remove(check);
+			emptySpaces.add(remove);
 			if (board.checkMill(moveSquare, movePoint, playerTurn)) {
 				phase = 3;
 			} else {
@@ -362,6 +362,7 @@ public class Logic {
 			}
 			board.setBoardNode(square, point, 0);
 			playerPieces.remove(remove);
+			emptySpaces.add(remove);
 			setPlayer();
 
 			if (piecesPlaced == 18) {
