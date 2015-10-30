@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.awt.Point;
+import java.lang.reflect.InvocationTargetException;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import AI.AI;
 import logic.Logic;
@@ -24,6 +26,7 @@ public class NineMensMorrisPanel extends JPanel {
 	private NineMensMorrisBoardPanel boardPanel;
 	private NineMensMorrisControlsPanel controlsPanel;
 	private Logic logic; private boolean useAI;
+	private AI AI;
 	
 	//List of all possible game positions
 	private static final List<Point> SPOT_INDEX_MAP = Arrays.asList(
@@ -143,10 +146,22 @@ public class NineMensMorrisPanel extends JPanel {
 			}
 			
 			updateBoard();
-			
+
 			if (ai) {
-				new AI().turn(panel.logic);
-				updateBoard();
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						AI.turn(panel.logic);
+						updateBoard();
+						if (panel.logic.getPhase() == 3) {
+							SwingUtilities.invokeLater(new Runnable() {
+								public void run() {
+							AI.turn(panel.logic);
+							updateBoard();
+								}
+							});
+						}
+					}
+				});
 			}
 		}
 		
@@ -180,6 +195,7 @@ public class NineMensMorrisPanel extends JPanel {
 		public void newGame(boolean useAI) {
 			panel.logic = new Logic();
 			panel.useAI = useAI;
+			panel.AI = new AI();
 			panel.controlsPanel.setPlayerLabel(logic.getPlayer());
 			panel.controlsPanel.setInstructions(logic.getPhase());
 			panel.setPlayerPieces(1, Collections.emptyList());

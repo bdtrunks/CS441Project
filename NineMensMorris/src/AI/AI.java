@@ -19,6 +19,7 @@ public class AI {
 	public boolean turn(Logic logic) {
 		if (logic.getPlayer() != 2)
 			return false;
+		
 		List<Point> emptySpaces = logic.getEmptySpaces();
 		Random rand = new Random();
 		
@@ -36,6 +37,7 @@ public class AI {
 			
 			pause();
 			logic.movePiece(piece.x, piece.y, move.x, move.y);
+			return true;
 		}
 		
 		if (logic.getPhase() == 1) {
@@ -43,6 +45,7 @@ public class AI {
 			
 			pause();
 			logic.placePiece(move.x, move.y);
+			return true;
 		}
 		
 		
@@ -55,16 +58,17 @@ public class AI {
 				remove = playerPieces.get(rand.nextInt(playerPieces.size()));
 				System.out.println("remove = " + remove);
 			} while (!logic.removePiece(remove.x, remove.y));
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	private void pause() {
-//		try {
-//			Thread.sleep(3000);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
+		long current = System.currentTimeMillis();
+		long end = current + 2000;
+		while (current < end) {
+			current = System.currentTimeMillis();
+		}
 	}
 	
 }
