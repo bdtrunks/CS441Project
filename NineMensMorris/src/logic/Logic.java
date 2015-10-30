@@ -52,6 +52,10 @@ public class Logic {
 			playerTurn = 1;
 		}
 	}
+	
+	public List<Point> getEmptySpaces(){
+		return emptySpaces;
+	}
 
 	/**
 	 * Sets the current phase, 1 for placing, 2 for moving, 3 for removing, 4 for win
