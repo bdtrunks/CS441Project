@@ -26,9 +26,35 @@ public class AI {
 		Random rand = new Random();
 		
 		if (logic.getPhase() == 2) {
+			pause();
 			List<Point> aiPieces = logic.getPlayerTwoPieces();
 			Point piece, move;
 			Collection<Point> places;
+			//Move to create mill if possible
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 8; j++) {
+					if (aiPieces.contains(new Point(i,j)) && logic.checkMoves(i, j).size() != 0) {
+						places = logic.checkMoves(i, j);
+						Point[] moves = (Point[]) places.toArray(new Point[places.size()]);
+						for (int k = 0; k < moves.length; k++) {
+							int x = moves[k].x;
+							int y = moves[k].y;
+							board.setBoardNode(i, j, 0);
+							board.setBoardNode(x,y,2);
+							if (board.checkMill(x,y,2)) {
+								board.setBoardNode(i, j, 2);
+								board.setBoardNode(x, y, 0);
+								System.out.println(x + "," + y);
+								logic.movePiece(i, j, x, y);
+								return true;
+							}
+							board.setBoardNode(i, j, 2);
+							board.setBoardNode(x, y, 0);
+						}
+					}
+				}
+			}
+			//Random Move
 			do {
 				piece = aiPieces.get(rand.nextInt(aiPieces.size()));
 				places = logic.checkMoves(piece.x, piece.y);
@@ -37,7 +63,6 @@ public class AI {
 			move = (Point) places.toArray()[rand.nextInt(places.size())];
 			System.out.println(Arrays.toString(places.toArray()));
 			
-			pause();
 			logic.movePiece(piece.x, piece.y, move.x, move.y);
 			return true;
 		}
@@ -78,7 +103,7 @@ public class AI {
 			for (int i = 0; i < 3; i++) {
 				for (int j = 0; j < 8; j++) {
 					if (board.getBoardNode(i,j) == 2) {
-						if (logic.placePiece((i+1)%3,j) || logic.placePiece((i-1)%3,j) || logic.placePiece(i,(j-1)%8) || logic.placePiece(i,(j+1)%8)) {
+						if (logic.placePiece((i+1)%3,j) || logic.placePiece((i-1+3)%3,j) || logic.placePiece(i,(j-1+8)%8) || logic.placePiece(i,(j+1)%8)) {
 							return true;
 						}
 					}
@@ -91,11 +116,10 @@ public class AI {
 		}
 		
 		
-		if (logic.getPhase() == 3) {
+		if (logic.getPhase() == 3) {			
+			pause();
 			List<Point> playerPieces = logic.getPlayerOnePieces();
 			Point remove;
-			
-			pause();
 			//Random Remove
 			do {
 				remove = playerPieces.get(rand.nextInt(playerPieces.size()));
