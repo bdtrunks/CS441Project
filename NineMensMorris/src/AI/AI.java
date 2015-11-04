@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
+import logic.Board;
 import logic.Logic;
 
 public class AI {
@@ -21,6 +22,7 @@ public class AI {
 			return false;
 		
 		List<Point> emptySpaces = logic.getEmptySpaces();
+		Board board = logic.getBoard();
 		Random rand = new Random();
 		
 		if (logic.getPhase() == 2) {
@@ -41,9 +43,24 @@ public class AI {
 		}
 		
 		if (logic.getPhase() == 1) {
-			Point move = emptySpaces.get(rand.nextInt(emptySpaces.size()));
-			
 			pause();
+			//Check all available spaces to see if placing creates mill, if so place there
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 8; j++) {
+					if (emptySpaces.contains(new Point(i,j))) {
+						board.setBoardNode(i, j, 2);
+						if (board.checkMill(i,j,2)) {
+							board.setBoardNode(i, j, 0);
+							System.out.println(i + "," + j);
+							logic.placePiece(i, j);
+							return true;
+						}
+						board.setBoardNode(i, j, 0);
+					}
+				}
+			}
+			//Random Move
+			Point move = emptySpaces.get(rand.nextInt(emptySpaces.size()));
 			logic.placePiece(move.x, move.y);
 			return true;
 		}

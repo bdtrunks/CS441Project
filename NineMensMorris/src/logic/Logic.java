@@ -28,8 +28,8 @@ public class Logic {
 	 */
 	public Logic() {
 		emptySpaces = new LinkedList<>();
-		for(int x=0;x<2;x++){
-			for(int y=0;y<7;y++){
+		for(int x=0;x<3;x++){
+			for(int y=0;y<8;y++){
 				Point point = new Point(x,y);
 				emptySpaces.add(point);
 			}
