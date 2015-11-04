@@ -59,6 +59,31 @@ public class AI {
 					}
 				}
 			}
+			//Check all available spaces for possible block of opponent mill
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 8; j++) {
+					if (emptySpaces.contains(new Point(i,j))) {
+						board.setBoardNode(i, j, 1);
+						if (board.checkMill(i,j,1)) {
+							board.setBoardNode(i, j, 0);
+							System.out.println(i + "," + j);
+							logic.placePiece(i, j);
+							return true;
+						}
+						board.setBoardNode(i, j, 0);
+					}
+				}
+			}
+			//Check all available spaces to see if possible to place next to other pieces
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 8; j++) {
+					if (board.getBoardNode(i,j) == 2) {
+						if (logic.placePiece((i+1)%3,j) || logic.placePiece((i-1)%3,j) || logic.placePiece(i,(j-1)%8) || logic.placePiece(i,(j+1)%8)) {
+							return true;
+						}
+					}
+				}
+			}
 			//Random Move
 			Point move = emptySpaces.get(rand.nextInt(emptySpaces.size()));
 			logic.placePiece(move.x, move.y);
@@ -71,6 +96,7 @@ public class AI {
 			Point remove;
 			
 			pause();
+			//Random Remove
 			do {
 				remove = playerPieces.get(rand.nextInt(playerPieces.size()));
 				System.out.println("remove = " + remove);
