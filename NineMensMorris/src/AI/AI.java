@@ -103,7 +103,7 @@ public class AI {
 			for (int i = 0; i < 3; i++) {
 				for (int j = 0; j < 8; j++) {
 					if (board.getBoardNode(i,j) == 2) {
-						if (logic.placePiece((i+1)%3,j) || logic.placePiece((i-1+3)%3,j) || logic.placePiece(i,(j-1+8)%8) || logic.placePiece(i,(j+1)%8)) {
+						if ((j%2 != 0 && (logic.placePiece((i+1)%3,j) || logic.placePiece((i-1+3)%3,j))) || logic.placePiece(i,(j-1+8)%8) || logic.placePiece(i,(j+1)%8)) {
 							return true;
 						}
 					}
