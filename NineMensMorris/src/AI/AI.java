@@ -42,7 +42,6 @@ public class AI {
 							if (board.checkMill(x,y,2)) {
 								board.setBoardNode(i, j, 2);
 								board.setBoardNode(x, y, 0);
-								System.out.println(x + "," + y);
 								logic.movePiece(i, j, x, y);
 								return true;
 							}
@@ -64,7 +63,6 @@ public class AI {
 							board.setBoardNode(x,y,1);
 							if (board.checkMill(x,y,1)) {
 								board.setBoardNode(x, y, 0);
-								System.out.println(x + "," + y);
 								logic.movePiece(i, j, x, y);
 								return true;
 							}
@@ -82,7 +80,6 @@ public class AI {
 						for (int k = 0; k < moves.length; k++) {
 							int x = moves[k].x;
 							int y = moves[k].y;
-							System.out.println(x + "," + y);
 							logic.movePiece(i, j, x, y);
 							return true;
 						}
@@ -94,10 +91,7 @@ public class AI {
 				piece = aiPieces.get(rand.nextInt(aiPieces.size()));
 				places = logic.checkMoves(piece.x, piece.y);
 			} while (places.size() == 0);
-			System.out.println("places size = " + places.size());
 			move = (Point) places.toArray()[rand.nextInt(places.size())];
-			System.out.println(Arrays.toString(places.toArray()));
-			
 			logic.movePiece(piece.x, piece.y, move.x, move.y);
 			return true;
 		}
@@ -111,7 +105,6 @@ public class AI {
 						board.setBoardNode(i, j, 2);
 						if (board.checkMill(i,j,2)) {
 							board.setBoardNode(i, j, 0);
-							System.out.println(i + "," + j);
 							logic.placePiece(i, j);
 							return true;
 						}
@@ -126,7 +119,6 @@ public class AI {
 						board.setBoardNode(i, j, 1);
 						if (board.checkMill(i,j,1)) {
 							board.setBoardNode(i, j, 0);
-							System.out.println(i + "," + j);
 							logic.placePiece(i, j);
 							return true;
 						}
@@ -138,7 +130,17 @@ public class AI {
 			for (int i = 0; i < 3; i++) {
 				for (int j = 0; j < 8; j++) {
 					if (board.getBoardNode(i,j) == 2) {
-						if ((j%2 != 0 && (logic.placePiece((i+1)%3,j) || logic.placePiece((i-1+3)%3,j))) || logic.placePiece(i,(j-1+8)%8) || logic.placePiece(i,(j+1)%8)) {
+						boolean iminus1, iplus1, jminus1, jplus1;
+						iminus1 = iplus1 = jminus1 = jplus1 = true;
+						if (i == 0)
+							iminus1 = false;
+						if (i == 2)
+							iplus1 = false;
+						if (j == 0)
+							jminus1 = false;
+						if (j == 7)
+							jplus1 = false;
+						if ((j%2 != 0 && ((iplus1 && logic.placePiece(i+1,j)) || (iminus1 && logic.placePiece(i-1,j)))) || (jminus1 && logic.placePiece(i,j-1)) || (jplus1 && logic.placePiece(i,j+1))) {
 							return true;
 						}
 					}
@@ -175,7 +177,17 @@ public class AI {
 						board.setBoardNode(i, j, 1);
 						if (board.checkMill(i, j, 1)) {
 							board.setBoardNode(i, j, 0);
-							if ((j%2 != 0 && (logic.removePiece((i+1)%3,j) || logic.removePiece((i-1+3)%3,j))) || logic.removePiece(i,(j-1+8)%8) || logic.removePiece(i,(j+1)%8))
+							boolean iminus1, iplus1, jminus1, jplus1;
+							iminus1 = iplus1 = jminus1 = jplus1 = true;
+							if (i == 0)
+								iminus1 = false;
+							if (i == 2)
+								iplus1 = false;
+							if (j == 0)
+								jminus1 = false;
+							if (j == 7)
+								jplus1 = false;
+							if ((j%2 != 0 && ((iplus1 && logic.removePiece(i+1,j)) || (iminus1 && logic.removePiece(i-1,j)))) || (jminus1 && logic.removePiece(i,j-1) || (jplus1 && logic.removePiece(i,j+1))))
 								return true;
 						}
 						board.setBoardNode(i, j, 0);
@@ -185,7 +197,6 @@ public class AI {
 			//Random Remove
 			do {
 				remove = playerPieces.get(rand.nextInt(playerPieces.size()));
-				System.out.println("remove = " + remove);
 			} while (!logic.removePiece(remove.x, remove.y));
 			return true;
 		}
