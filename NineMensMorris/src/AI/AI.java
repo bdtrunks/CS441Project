@@ -24,7 +24,7 @@ public class AI {
 		List<Point> emptySpaces = logic.getEmptySpaces();
 		Board board = logic.getBoard();
 		Random rand = new Random();
-		
+		//MOVING PIECES PHASE
 		if (logic.getPhase() == 2) {
 			pause();
 			List<Point> aiPieces = logic.getPlayerTwoPieces();
@@ -54,6 +54,43 @@ public class AI {
 					}
 				}
 			}
+			//Move to block mill if possible
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 8; j++) {
+					if (aiPieces.contains(new Point(i,j)) && logic.checkMoves(i, j).size() != 0) {
+						places = logic.checkMoves(i, j);
+						Point[] moves = (Point[]) places.toArray(new Point[places.size()]);
+						for (int k = 0; k < moves.length; k++) {
+							int x = moves[k].x;
+							int y = moves[k].y;
+							board.setBoardNode(x,y,1);
+							if (board.checkMill(x,y,1)) {
+								board.setBoardNode(x, y, 0);
+								System.out.println(x + "," + y);
+								logic.movePiece(i, j, x, y);
+								return true;
+							}
+							board.setBoardNode(x, y, 0);
+						}
+					}
+				}
+			}
+			//Check to move piece that is within a mill so will create mill on next turn
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 8; j++) {
+					if (aiPieces.contains(new Point(i,j)) && logic.checkMoves(i, j).size() != 0 && board.checkMill(i, j, 2)) {
+						places = logic.checkMoves(i, j);
+						Point[] moves = (Point[]) places.toArray(new Point[places.size()]);
+						for (int k = 0; k < moves.length; k++) {
+							int x = moves[k].x;
+							int y = moves[k].y;
+							System.out.println(x + "," + y);
+							logic.movePiece(i, j, x, y);
+							return true;
+						}
+					}
+				}
+			}
 			//Random Move
 			do {
 				piece = aiPieces.get(rand.nextInt(aiPieces.size()));
@@ -66,7 +103,7 @@ public class AI {
 			logic.movePiece(piece.x, piece.y, move.x, move.y);
 			return true;
 		}
-		
+		//PLACING PIECES PHASE
 		if (logic.getPhase() == 1) {
 			pause();
 			//Check all available spaces to see if placing creates mill, if so place there
@@ -114,8 +151,7 @@ public class AI {
 			logic.placePiece(move.x, move.y);
 			return true;
 		}
-		
-		
+		//REMOVING PIECES PHASE
 		if (logic.getPhase() == 3) {			
 			pause();
 			List<Point> playerPieces = logic.getPlayerOnePieces();
