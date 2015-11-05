@@ -10,8 +10,6 @@ import logic.Board;
 import logic.Logic;
 
 public class AI {
-
-	
 	
 	public AI() {
 		
@@ -156,6 +154,34 @@ public class AI {
 			pause();
 			List<Point> playerPieces = logic.getPlayerOnePieces();
 			Point remove;
+			//Attempt to remove player pieces that are blocking a mill
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 8; j++) {
+					if (playerPieces.contains(new Point(i,j))) {
+						board.setBoardNode(i, j, 2);
+						if (board.checkMill(i, j, 2)) {
+							board.setBoardNode(i, j, 1);
+							if (logic.removePiece(i,j))
+								return true;
+						}
+						board.setBoardNode(i, j, 1);
+					}
+				}
+			}
+			//Attempt to remove player pieces that are close to forming mill
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 8; j++) {
+					if (emptySpaces.contains(new Point(i, j))) {
+						board.setBoardNode(i, j, 1);
+						if (board.checkMill(i, j, 1)) {
+							board.setBoardNode(i, j, 0);
+							if ((j%2 != 0 && (logic.removePiece((i+1)%3,j) || logic.removePiece((i-1+3)%3,j))) || logic.removePiece(i,(j-1+8)%8) || logic.removePiece(i,(j+1)%8))
+								return true;
+						}
+						board.setBoardNode(i, j, 0);
+					}
+				}
+			}
 			//Random Remove
 			do {
 				remove = playerPieces.get(rand.nextInt(playerPieces.size()));
