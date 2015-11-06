@@ -23,10 +23,10 @@ public class AI {
 
 	public AI(int difficulty) {
 		rand = new Random();
-		if (difficulty < 0 || difficulty > 2) {
-			this.difficulty = 1;
+		if (difficulty < 0 || difficulty > 1) {
+			this.difficulty = 2;
 		} else {
-			this.difficulty = difficulty; // 1=easy, 2=normal
+			this.difficulty = difficulty; // 0=easy, 1=normal
 		}
 	}
 
@@ -47,7 +47,7 @@ public class AI {
 
 		pause();
 
-		if (difficulty == 2) {
+		if (difficulty == 1) {
 			// MOVING PIECES PHASE
 			if (logic.getPhase() == 2 && movePiece())
 				return true;
@@ -62,7 +62,7 @@ public class AI {
 
 		}
 
-		if (difficulty == 1) {
+		if (difficulty == 0) {
 			// MOVING PIECES PHASE
 			if (logic.getPhase() == 2 && moveRandom())
 				return true;
