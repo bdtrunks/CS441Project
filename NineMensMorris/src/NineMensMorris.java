@@ -14,7 +14,6 @@ public class NineMensMorris extends JFrame{
 	 * Creates the game frame
 	 */
 	public NineMensMorris() {
-		//new JFrame("9 Men's Morris");
 		setTitle("9 Men's Morris");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().add(new NineMensMorrisPanel());

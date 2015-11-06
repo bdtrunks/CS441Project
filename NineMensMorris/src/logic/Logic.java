@@ -42,6 +42,10 @@ public class Logic {
 		playerWon = 0;
 		piecesPlaced = 0;
 	}
+	
+	public int getPiecesPlaced() {
+		return piecesPlaced;
+	}
 
 	/**
 	 * Sets the current player
