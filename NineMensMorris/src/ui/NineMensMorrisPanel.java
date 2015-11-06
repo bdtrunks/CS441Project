@@ -24,7 +24,7 @@ import logic.Logic;
 public class NineMensMorrisPanel extends JPanel {
 	private NineMensMorrisBoardPanel boardPanel;
 	private NineMensMorrisControlsPanel controlsPanel;
-	private Logic logic; private boolean useAI;
+	private Logic logic; private int gameType;
 	private AI AI;
 	
 	//List of all possible game positions
@@ -43,7 +43,7 @@ public class NineMensMorrisPanel extends JPanel {
 	 */
 	public NineMensMorrisPanel () {
 		this.logic = new Logic();
-		this.useAI = false;
+		this.gameType = 2;
 		
 		setPreferredSize(new Dimension(720, 500));
 		setLayout(new GridBagLayout());
@@ -126,13 +126,13 @@ public class NineMensMorrisPanel extends JPanel {
 			switch(panel.logic.getPhase()) {
 				case 1: // place piece
 					if (panel.logic.placePiece(p.x, p.y))
-						ai = useAI;
+						ai = gameType < 2;
 					break;
 				case 2: // move piece
 					if (prevPoint != null && logic.movePiece(prevPoint.x, prevPoint.y, p.x, p.y)) {
 						prevPoint = null;
 						panel.setValidMoves(Collections.emptyList());
-						ai = useAI;
+						ai = gameType < 2;
 					} else {
 						prevPoint = p;
 						panel.setValidMoves(panel.logic.checkMoves(p.x, p.y));
@@ -140,7 +140,7 @@ public class NineMensMorrisPanel extends JPanel {
 					break;	
 				case 3: // remove piece
 					if (panel.logic.removePiece(p.x, p.y))
-						ai = useAI;
+						ai = gameType < 2;
 					break;
 			}
 			
@@ -170,6 +170,7 @@ public class NineMensMorrisPanel extends JPanel {
 			
 			panel.controlsPanel.setPlayerLabel((panel.logic.getWinner() > 0) ? logic.getWinner() : logic.getPlayer());
 			panel.controlsPanel.setInstructions(logic.getPhase());
+			panel.controlsPanel.setPiecesPlaced(logic.getPiecesPlaced());
 		}
 	}
 	
@@ -191,12 +192,13 @@ public class NineMensMorrisPanel extends JPanel {
 		/**
 		 * When new game button pushed, reset everything
 		 */
-		public void newGame(boolean useAI) {
+		public void newGame(int gameType) {
 			panel.logic = new Logic();
-			panel.useAI = useAI;
-			panel.AI = new AI();
+			panel.gameType = gameType;
+			panel.AI = new AI(gameType);
 			panel.controlsPanel.setPlayerLabel(logic.getPlayer());
 			panel.controlsPanel.setInstructions(logic.getPhase());
+			panel.controlsPanel.setPiecesPlaced(0);
 			panel.setPlayerPieces(1, Collections.emptyList());
 			panel.setPlayerPieces(2, Collections.emptyList());
 			panel.setValidMoves(Collections.emptyList());

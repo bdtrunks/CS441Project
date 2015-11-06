@@ -27,9 +27,9 @@ import ui.NineMensMorrisPanel.NewGameListener;
 public class NineMensMorrisControlsPanel extends JPanel {
 	private static final Color[] PLAYER_COLOR = {null, NineMensMorrisBoardPanel.PLAYER_1_COLOR, 
 													NineMensMorrisBoardPanel.PLAYER_2_COLOR};
-	private JLabel	  playerLabel;
+	private JLabel	  playerLabel, player1PiecesLeft, player2PiecesLeft;
 	private JTextArea instructionsTextArea;
-	private JButton	  onePlayerButton, twoPlayerButton;
+	private JButton	  easyButton, hardButton, twoPlayerButton;
 	
 	/**
 	 * Creates the controls panel
@@ -54,7 +54,6 @@ public class NineMensMorrisControlsPanel extends JPanel {
 		playerLabel.setName("playerLabel");
 		add(playerLabel, c);
 		
-		
 		c.weightx = 1; c.weighty = 0;
 		c.gridx = 0; c.gridy = 1;
 		
@@ -66,14 +65,37 @@ public class NineMensMorrisControlsPanel extends JPanel {
 		instructionsTextArea.setPreferredSize(new Dimension(200, 50));
 		add(instructionsTextArea, c);
 		
+		c.gridy = 2;
+		
+		player1PiecesLeft = new JLabel("Player 1 Pieces: 9");
+		player1PiecesLeft.setPreferredSize(new Dimension(200, 20));
+		player1PiecesLeft.setFont(new Font("Helvetica", 0, 20));
+		player1PiecesLeft.setForeground(PLAYER_COLOR[1]);
+		player1PiecesLeft.setHorizontalAlignment(SwingConstants.CENTER);
+		player1PiecesLeft.setName("player1PiecesLeft");
+		add(player1PiecesLeft, c);
+		
+		c.gridy = 3;
+		
+		player2PiecesLeft = new JLabel("Player 2 Pieces: 9");
+		player2PiecesLeft.setPreferredSize(new Dimension(200, 20));
+		player2PiecesLeft.setFont(new Font("Helvetica", 0, 20));
+		player2PiecesLeft.setForeground(PLAYER_COLOR[2]);
+		player2PiecesLeft.setHorizontalAlignment(SwingConstants.CENTER);
+		player2PiecesLeft.setName("player2PiecesLeft");
+		add(player2PiecesLeft, c);
 		
 		JPanel newGamePanel = new JPanel();
 		newGamePanel.setBorder(BorderFactory.createTitledBorder(null, "Start New Game", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));
 		newGamePanel.setPreferredSize(new Dimension(200, 200));
 		
-		onePlayerButton = new JButton("1 Player");
-		onePlayerButton.setPreferredSize(new Dimension(85, 25));
-		newGamePanel.add(onePlayerButton);
+		easyButton = new JButton("Easy");
+		easyButton.setPreferredSize(new Dimension(85, 25));
+		newGamePanel.add(easyButton);
+		
+		hardButton = new JButton("Hard");
+		hardButton.setPreferredSize(new Dimension(85, 25));
+		newGamePanel.add(hardButton);
 		
 		twoPlayerButton = new JButton("2 Player");
 		twoPlayerButton.setPreferredSize(new Dimension(85, 25));
@@ -87,12 +109,13 @@ public class NineMensMorrisControlsPanel extends JPanel {
 		
 		add(newGamePanel, c);
 		
-		onePlayerButton.addActionListener(new NewGameButtonListener(newGameListener, true));
-		twoPlayerButton.addActionListener(new NewGameButtonListener(newGameListener, false));
+		easyButton.addActionListener(new NewGameButtonListener(newGameListener, 0));
+		hardButton.addActionListener(new NewGameButtonListener(newGameListener, 1));
+		twoPlayerButton.addActionListener(new NewGameButtonListener(newGameListener, 2));
 		
 		setPlayerLabel(1);
 		setInstructions(1);
-	}
+}
 	
 	/**
 	 * Sets the player label to the current player
@@ -101,6 +124,11 @@ public class NineMensMorrisControlsPanel extends JPanel {
 	public void setPlayerLabel(int player) {
 		playerLabel.setText("Player " + player);
 		playerLabel.setForeground(PLAYER_COLOR[player]);
+	}
+	
+	public void setPiecesPlaced(int piecesPlaced) {
+		player1PiecesLeft.setText("Player 1 Pieces: " + (9 -((int) Math.ceil(((double)piecesPlaced)/2))));
+		player2PiecesLeft.setText("Player 2 Pieces: " + (9 - (piecesPlaced/2)));
 	}
 	
 	/**
@@ -126,16 +154,16 @@ public class NineMensMorrisControlsPanel extends JPanel {
 	
 	private class NewGameButtonListener implements ActionListener {
 		private NewGameListener newGameListener;
-		private boolean useAI;
+		private int gameType;
 		
-		public NewGameButtonListener(NewGameListener newGameListener, boolean useAI) {
+		public NewGameButtonListener(NewGameListener newGameListener, int gameType) {
 			this.newGameListener = newGameListener;
-			this.useAI = useAI;
+			this.gameType = gameType;
 		}
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			newGameListener.newGame(useAI);
+			newGameListener.newGame(gameType);
 		}
 	}
 }
