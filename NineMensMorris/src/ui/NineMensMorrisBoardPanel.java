@@ -29,6 +29,9 @@ public class NineMensMorrisBoardPanel extends JPanel {
 	private static final double GAME_PIECE_SIZE = 0.6;
 	protected static final Color PLAYER_1_COLOR = Color.decode("#09347A");
 	protected static final Color PLAYER_2_COLOR = Color.decode("#F1632A");
+	private static final double PIECE_STROKE_SIZE = 0.06;
+	private static final Color PIECE_STROKE_COLOR = Color.WHITE;
+	private static final Color SELECTED_PIECE_COLOR = Color.decode("#13A558");
 	
 	private static final double VALID_MOVE_SIZE = 0.3;
 	private static final Color VALID_MOVE_COLOR = Color.decode("#13A558");
@@ -52,6 +55,7 @@ public class NineMensMorrisBoardPanel extends JPanel {
 	private Collection<Integer> player1PieceIndices = Collections.emptyList();
 	private Collection<Integer> player2PieceIndices = Collections.emptyList();
 	private Collection<Integer> validMoveIndices	= Collections.emptyList();
+	private Integer selectedPieceIndex = null;
 	
 	private final BoardClickListener boardClickListener;
 	
@@ -83,17 +87,22 @@ public class NineMensMorrisBoardPanel extends JPanel {
 		canvas2D.setStroke(new BasicStroke((int)(GRID_STROKE_SIZE * scale)));
 		GRID_SQUARES.forEach(s -> drawSquare(canvas2D, center, s, scale));
 		GRID_LINES  .forEach(l -> drawLine  (canvas2D, center, new Point(l.first()), l.second(), scale));
-		GRID_POINTS .forEach(p -> drawCircle(canvas2D, center, p, GRID_POINT_SIZE, scale));
+		GRID_POINTS .forEach(p -> drawCircle(canvas2D, center, p, GRID_POINT_SIZE, scale, true));
 		
 		// draw player pieces
-		canvas2D.setColor(PLAYER_1_COLOR);
-		player1PieceIndices.forEach(p -> drawGamePiece(canvas2D, center, GRID_POINTS.get(p), scale));
-		canvas2D.setColor(PLAYER_2_COLOR);
-		player2PieceIndices.forEach(p -> drawGamePiece(canvas2D, center, GRID_POINTS.get(p), scale));
+		canvas2D.setStroke(new BasicStroke((int)(PIECE_STROKE_SIZE * scale)));
+		player1PieceIndices.forEach(p -> drawGamePiece(canvas2D, center, GRID_POINTS.get(p), scale, PLAYER_1_COLOR));
+		player2PieceIndices.forEach(p -> drawGamePiece(canvas2D, center, GRID_POINTS.get(p), scale, PLAYER_2_COLOR));
 		
 		// draw valid moves
 		canvas2D.setColor(VALID_MOVE_COLOR);
-		validMoveIndices.forEach(m -> drawCircle(canvas2D, center, GRID_POINTS.get(m), VALID_MOVE_SIZE, scale));
+		validMoveIndices.forEach(m -> drawCircle(canvas2D, center, GRID_POINTS.get(m), VALID_MOVE_SIZE, scale, true));
+	
+		// draw selected piece
+		if (selectedPieceIndex != null) {
+			canvas.setColor(SELECTED_PIECE_COLOR);
+			drawCircle(canvas2D, center, GRID_POINTS.get(selectedPieceIndex), GAME_PIECE_SIZE, scale, false);
+		}
 	}
 	
 	/**
@@ -111,6 +120,15 @@ public class NineMensMorrisBoardPanel extends JPanel {
 	 */
 	public void setPlayer2PieceIndices(Collection<Integer> pieces) {
 		this.player2PieceIndices = pieces;
+		repaint();
+	}
+	
+	/**
+	 * Draws the currently selected piece on game board
+	 * @param index
+	 */
+	public void setSelectedPiece(Integer index) {
+		this.selectedPieceIndex = index;
 		repaint();
 	}
 	
@@ -157,13 +175,17 @@ public class NineMensMorrisBoardPanel extends JPanel {
 	 * @param size - size of circle
 	 * @param scale - scale of circle
 	 */
-	private void drawCircle(Graphics2D canvas, Point center, Point location, double size, int scale) {
+	private void drawCircle(Graphics2D canvas, Point center, Point location, double size, int scale, boolean fill) {
 		int scaledSize = (int)(size * scale);
 		int half = scaledSize / 2;
-		canvas.fillOval(
-				(center.x + (location.x * scale)) - half,
-				(center.y + (location.y * scale)) - half,
-				scaledSize, scaledSize);
+		int x = (center.x + (location.x * scale)) - half;
+		int y = (center.y + (location.y * scale)) - half;
+		
+		if (fill) {
+			canvas.fillOval(x, y, scaledSize, scaledSize);
+		} else {
+			canvas.drawOval(x, y, scaledSize, scaledSize);
+		}
 	}
 	
 	/**
@@ -173,8 +195,11 @@ public class NineMensMorrisBoardPanel extends JPanel {
 	 * @param location - location to place piece
 	 * @param scale - scale of piece
 	 */
-	private void drawGamePiece(Graphics2D canvas, Point center, Point location, int scale) {
-		drawCircle(canvas, center, location, GAME_PIECE_SIZE, scale);
+	private void drawGamePiece(Graphics2D canvas, Point center, Point location, int scale, Color color) {
+		canvas.setColor(color);
+		drawCircle(canvas, center, location, GAME_PIECE_SIZE, scale, true);
+		canvas.setColor(PIECE_STROKE_COLOR);
+		drawCircle(canvas, center, location, GAME_PIECE_SIZE, scale, false);
 	}
 	
 	/**
