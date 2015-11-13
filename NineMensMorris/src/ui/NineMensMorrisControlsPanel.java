@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -36,76 +37,74 @@ public class NineMensMorrisControlsPanel extends JPanel {
 	 * @param newGameListener - fires when new game button is hit to start new game
 	 */
 	public NineMensMorrisControlsPanel(NewGameListener newGameListener) {
-		setPreferredSize(new Dimension(220, 500));
+		setPreferredSize(new Dimension(220, 0));
 		setLayout(new GridBagLayout());
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.anchor = GridBagConstraints.PAGE_START;
-		c.insets = new Insets(10, 10, 10, 10);
-		c.weightx = 0; c.weighty = 0;
+		c.weightx = 1; c.weighty = 0;
 		c.gridx = 0; c.gridy = 0;
 		c.gridwidth = 1; c.gridheight = 1;
+		
+		JPanel infoPanel = new JPanel();
+		infoPanel.setLayout(new GridBagLayout());
 		
 		playerLabel = new JLabel("Player 1");
 		playerLabel.setPreferredSize(new Dimension(200, 50));
 		playerLabel.setFont(new Font("Helvetica", 0, 40));
 		playerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		playerLabel.setName("playerLabel");
+		c.insets = new Insets(10, 10, 10, 10);
 		add(playerLabel, c);
-		
-		c.weightx = 1; c.weighty = 0;
-		c.gridx = 0; c.gridy = 1;
 		
 		instructionsTextArea = new JTextArea(3, 50);
 		instructionsTextArea.setEditable(false);
 		instructionsTextArea.setLineWrap(true);
 		instructionsTextArea.setWrapStyleWord(true);
-		
 		instructionsTextArea.setPreferredSize(new Dimension(200, 50));
+		c.gridy = 1; c.insets = new Insets(0, 10, 10, 10);
 		add(instructionsTextArea, c);
 		
-		c.gridy = 2;
-		
 		player1PiecesLeft = new JLabel("Player 1 Pieces: 9");
-		player1PiecesLeft.setPreferredSize(new Dimension(200, 20));
+		player1PiecesLeft.setPreferredSize(new Dimension(200, 18));
 		player1PiecesLeft.setFont(new Font("Helvetica", 0, 20));
 		player1PiecesLeft.setForeground(PLAYER_COLOR[1]);
 		player1PiecesLeft.setHorizontalAlignment(SwingConstants.CENTER);
 		player1PiecesLeft.setName("player1PiecesLeft");
+		c.gridy = 2; c.insets = new Insets(2, 2, 2, 2);
 		add(player1PiecesLeft, c);
 		
-		c.gridy = 3;
-		
 		player2PiecesLeft = new JLabel("Player 2 Pieces: 9");
-		player2PiecesLeft.setPreferredSize(new Dimension(200, 20));
+		player2PiecesLeft.setPreferredSize(new Dimension(200, 18));
 		player2PiecesLeft.setFont(new Font("Helvetica", 0, 20));
 		player2PiecesLeft.setForeground(PLAYER_COLOR[2]);
 		player2PiecesLeft.setHorizontalAlignment(SwingConstants.CENTER);
 		player2PiecesLeft.setName("player2PiecesLeft");
+		c.gridy = 3;
 		add(player2PiecesLeft, c);
 		
 		JPanel newGamePanel = new JPanel();
+		
+		newGamePanel.setPreferredSize(new Dimension(200, 134));
 		newGamePanel.setBorder(BorderFactory.createTitledBorder(null, "Start New Game", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));
-		newGamePanel.setPreferredSize(new Dimension(200, 200));
 		
 		easyButton = new JButton("Easy");
-		easyButton.setPreferredSize(new Dimension(85, 25));
+		easyButton.setPreferredSize(new Dimension(180, 30));
 		newGamePanel.add(easyButton);
 		
 		hardButton = new JButton("Hard");
-		hardButton.setPreferredSize(new Dimension(85, 25));
+		hardButton.setPreferredSize(new Dimension(180, 30));
 		newGamePanel.add(hardButton);
 		
 		twoPlayerButton = new JButton("2 Player");
-		twoPlayerButton.setPreferredSize(new Dimension(85, 25));
+		twoPlayerButton.setPreferredSize(new Dimension(180, 30));
 		newGamePanel.add(twoPlayerButton);
 		
-		c.anchor = GridBagConstraints.PAGE_END;
-		c.insets = new Insets(10, 10, 10, 10);
-		c.weightx = 1; c.weighty = 2;
-		c.gridx = 0; c.gridy = 2;
-		c.gridwidth = 1; c.gridheight = 2;
+		newGamePanel.setMinimumSize(new Dimension(200, 134));
+		
+		c.anchor = GridBagConstraints.SOUTH;
+		c.gridy = 4; c.weighty = 1;
+		c.insets = new Insets(20, 10, 10, 10);
+		c.gridheight = GridBagConstraints.REMAINDER;
 		
 		add(newGamePanel, c);
 		
@@ -115,7 +114,7 @@ public class NineMensMorrisControlsPanel extends JPanel {
 		
 		setPlayerLabel(1);
 		setInstructions(1);
-}
+	}
 	
 	/**
 	 * Sets the player label to the current player

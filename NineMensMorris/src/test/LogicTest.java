@@ -11,6 +11,8 @@ import java.util.Random;
 
 import org.junit.Test;
 
+import AI.AI;
+import AI.TestAI;
 import logic.Board;
 import logic.Logic;
 import logic.Node;
@@ -1075,4 +1077,57 @@ public class LogicTest {
 		logic.setPhase(2);
 		assertTrue(logic.isLoser(logic.getPlayerOnePieces()));
 	}
+	
+	//-----------AI TESTS---------------------------
+	
+	@Test
+	public void AItestHardvsEasy() {
+		Logic logic = new Logic();
+		AI hard = new AI(1);
+		TestAI easy = new TestAI(0,false);
+		while (logic.getPhase() != 4) {
+			if (logic.getPhase() == 1) {
+				easy.turn(logic);
+				if (logic.getPhase() == 3)
+					easy.turn(logic);
+				hard.turn(logic);
+				if (logic.getPhase() == 3)
+					hard.turn(logic);
+			} else if (logic.getPhase() == 2) {
+				easy.turn(logic);
+				if (logic.getPhase() == 3)
+					easy.turn(logic);
+				hard.turn(logic);
+				if (logic.getPhase() == 3)
+					hard.turn(logic);
+			}
+		}
+		assertTrue(logic.getWinner() == 2);
+	}
+	
+	@Test
+	public void AItestHardvsEasyReversed() {
+		Logic logic = new Logic();
+		AI easy = new AI(0);
+		TestAI hard = new TestAI(1,false);
+		while (logic.getPhase() != 4) {
+			if (logic.getPhase() == 1) {
+				hard.turn(logic);
+				if (logic.getPhase() == 3)
+					hard.turn(logic);
+				easy.turn(logic);
+				if (logic.getPhase() == 3)
+					easy.turn(logic);
+			} else if (logic.getPhase() == 2) {
+				hard.turn(logic);
+				if (logic.getPhase() == 3)
+					hard.turn(logic);
+				easy.turn(logic);
+				if (logic.getPhase() == 3)
+					easy.turn(logic);
+			}
+		}
+		assertTrue(logic.getWinner() == 1);
+	}
+	
 }
