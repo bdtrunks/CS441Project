@@ -27,7 +27,7 @@ public class Logic {
 	 * Initialize Logic by starting with player 1 and creating a clear board
 	 */
 	public Logic() {
-		emptySpaces = new LinkedList<>();
+		emptySpaces = new LinkedList<Point>();
 		for(int x=0;x<3;x++){
 			for(int y=0;y<8;y++){
 				Point point = new Point(x,y);
@@ -41,6 +41,15 @@ public class Logic {
 		board = new Board();
 		playerWon = 0;
 		piecesPlaced = 0;
+	}
+	
+	//FOR TESTING
+	public void setPiecesPlaced(int amount) {
+		piecesPlaced = amount;
+	}
+	
+	public void removeEmptySpace(Point remove) {
+		emptySpaces.remove(remove);
 	}
 	
 	public int getPiecesPlaced() {
