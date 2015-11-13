@@ -85,7 +85,7 @@ public class AI {
 	 */
 	private void pause() {
 		long current = System.currentTimeMillis();
-		long end = current + 2000;
+		long end = current + 500;
 		while (current < end) {
 			current = System.currentTimeMillis();
 		}

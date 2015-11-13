@@ -28,7 +28,7 @@ import ui.NineMensMorrisPanel.NewGameListener;
 public class NineMensMorrisControlsPanel extends JPanel {
 	private static final Color[] PLAYER_COLOR = {null, NineMensMorrisBoardPanel.PLAYER_1_COLOR, 
 													NineMensMorrisBoardPanel.PLAYER_2_COLOR};
-	private JLabel	  playerLabel, player1PiecesLeft, player2PiecesLeft;
+	private JLabel	  playerLabel, gameMode, player1PiecesLeft, player2PiecesLeft;
 	private JTextArea instructionsTextArea;
 	private JButton	  easyButton, hardButton, twoPlayerButton;
 	
@@ -64,13 +64,20 @@ public class NineMensMorrisControlsPanel extends JPanel {
 		c.gridy = 1; c.insets = new Insets(0, 10, 10, 10);
 		add(instructionsTextArea, c);
 		
+		gameMode = new JLabel("Game Mode: 2 Player");
+		gameMode.setPreferredSize(new Dimension(200, 18));
+		gameMode.setFont(new Font("Helvetica", 0, 20));
+		gameMode.setHorizontalAlignment(SwingConstants.CENTER);
+		c.gridy = 2; c.insets = new Insets(2, 2, 2, 2);
+		add(gameMode, c);
+		
 		player1PiecesLeft = new JLabel("Player 1 Pieces: 9");
 		player1PiecesLeft.setPreferredSize(new Dimension(200, 18));
 		player1PiecesLeft.setFont(new Font("Helvetica", 0, 20));
 		player1PiecesLeft.setForeground(PLAYER_COLOR[1]);
 		player1PiecesLeft.setHorizontalAlignment(SwingConstants.CENTER);
 		player1PiecesLeft.setName("player1PiecesLeft");
-		c.gridy = 2; c.insets = new Insets(2, 2, 2, 2);
+		c.gridy = 3; c.insets = new Insets(2, 2, 2, 2);
 		add(player1PiecesLeft, c);
 		
 		player2PiecesLeft = new JLabel("Player 2 Pieces: 9");
@@ -79,7 +86,7 @@ public class NineMensMorrisControlsPanel extends JPanel {
 		player2PiecesLeft.setForeground(PLAYER_COLOR[2]);
 		player2PiecesLeft.setHorizontalAlignment(SwingConstants.CENTER);
 		player2PiecesLeft.setName("player2PiecesLeft");
-		c.gridy = 3;
+		c.gridy = 4;
 		add(player2PiecesLeft, c);
 		
 		JPanel newGamePanel = new JPanel();
@@ -102,7 +109,7 @@ public class NineMensMorrisControlsPanel extends JPanel {
 		newGamePanel.setMinimumSize(new Dimension(200, 134));
 		
 		c.anchor = GridBagConstraints.SOUTH;
-		c.gridy = 4; c.weighty = 1;
+		c.gridy = 5; c.weighty = 1;
 		c.insets = new Insets(20, 10, 10, 10);
 		c.gridheight = GridBagConstraints.REMAINDER;
 		
@@ -123,6 +130,21 @@ public class NineMensMorrisControlsPanel extends JPanel {
 	public void setPlayerLabel(int player) {
 		playerLabel.setText("Player " + player);
 		playerLabel.setForeground(PLAYER_COLOR[player]);
+	}
+	
+	public void setGameMode(int mode) {
+		switch(mode) {
+		case 0: // easy
+			gameMode.setText("Game Mode: Easy");
+			break;
+		case 1: // hard
+			gameMode.setText("Game Mode: Hard");
+			break;	
+		case 2: // 2 player
+			gameMode.setText("Game Mode: 2 Player");
+			break;
+
+		}
 	}
 	
 	public void setPiecesPlaced(int piecesPlaced) {

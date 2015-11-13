@@ -197,6 +197,7 @@ public class NineMensMorrisPanel extends JPanel {
 			panel.gameType = gameType;
 			panel.AI = new AI(gameType);
 			panel.controlsPanel.setPlayerLabel(logic.getPlayer());
+			panel.controlsPanel.setGameMode(gameType);
 			panel.controlsPanel.setInstructions(logic.getPhase());
 			panel.controlsPanel.setPiecesPlaced(0);
 			panel.setPlayerPieces(1, Collections.emptyList());
