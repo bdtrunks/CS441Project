@@ -1080,10 +1080,12 @@ public class LogicTest {
 	
 	//-----------AI TESTS---------------------------
 	
+	private static final int SEED = 20;
+	
 	@Test
 	public void AItestHardvsEasy() {
 		Logic logic = new Logic();
-		AI hard = new AI(1);
+		AI hard = new AI(1,SEED,false);
 		TestAI easy = new TestAI(0,false);
 		while (logic.getPhase() != 4) {
 			if (logic.getPhase() == 1) {
@@ -1108,7 +1110,7 @@ public class LogicTest {
 	@Test
 	public void AItestHardvsEasyReversed() {
 		Logic logic = new Logic();
-		AI easy = new AI(0);
+		AI easy = new AI(0,SEED,false);
 		TestAI hard = new TestAI(1,false);
 		while (logic.getPhase() != 4) {
 			if (logic.getPhase() == 1) {
