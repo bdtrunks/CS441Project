@@ -206,6 +206,7 @@ public class NineMensMorrisPanel extends JPanel {
 			panel.setPlayerPieces(1, Collections.emptyList());
 			panel.setPlayerPieces(2, Collections.emptyList());
 			panel.setValidMoves(Collections.emptyList());
+			panel.boardPanel.setSelectedPiece(null);
 		}
 	}
 }
