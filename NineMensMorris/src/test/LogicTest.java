@@ -1330,5 +1330,143 @@ public class LogicTest {
 	}
 
 	
-
+	// AI Remove Tests
+	
+	@Test
+	public void AItestRemoveBlockingMillCorner(){
+		Logic logic = new Logic();
+		AI ai = new AI(1, SEED, false);
+		logic.placePiece(1, 0);
+		logic.placePiece(1, 1);
+		logic.placePiece(2, 1);
+		logic.placePiece(1, 2);
+		
+		logic.setPhase(3);
+		logic.setPlayer();
+		
+		ai.turn(logic);
+		
+		assertTrue(logic.getBoard().getBoardNode(1, 0) == 0);
+		assertTrue(logic.getBoard().getBoardNode(2, 1) == 1);
+	}
+	
+	@Test
+	public void AItestRemoveBlockingMillCenter(){
+		Logic logic = new Logic();
+		AI ai = new AI(1, SEED, false);
+		logic.placePiece(1, 1);
+		logic.placePiece(1, 0);
+		logic.placePiece(2, 1);
+		logic.placePiece(1, 2);
+		
+		logic.setPhase(3);
+		logic.setPlayer();
+		
+		ai.turn(logic);
+		
+		assertTrue(logic.getBoard().getBoardNode(1, 1) == 0);
+		assertTrue(logic.getBoard().getBoardNode(2, 1) == 1);
+	}
+	
+	@Test
+	public void AItestRemoveForminggMillCorner(){
+		Logic logic = new Logic();
+		AI ai = new AI(1, SEED, false);
+		logic.placePiece(1, 0);
+		logic.placePiece(2, 0);
+		logic.placePiece(1, 1);
+		logic.placePiece(2, 3);
+		logic.placePiece(0, 5);
+		
+		logic.setPhase(3);
+		
+		ai.turn(logic);
+		
+		assertTrue(logic.getBoard().getBoardNode(1, 0) == 0 || logic.getBoard().getBoardNode(1, 1) == 0);
+		assertTrue(logic.getBoard().getBoardNode(0, 5) == 1);
+	}
+	
+	@Test
+	public void AItestRemoveForminggMillCenter(){
+		Logic logic = new Logic();
+		AI ai = new AI(1, SEED, false);
+		logic.placePiece(1, 0);
+		logic.placePiece(2, 0);
+		logic.placePiece(1, 2);
+		logic.placePiece(2, 3);
+		logic.placePiece(0, 5);
+		
+		logic.setPhase(3);
+		
+		ai.turn(logic);
+		
+		assertTrue(logic.getBoard().getBoardNode(1, 0) == 0 || logic.getBoard().getBoardNode(1, 2) == 0);
+		assertTrue(logic.getBoard().getBoardNode(0, 5) == 1);
+	}
+	
+	@Test
+	public void AItestRemovePriorityCorner(){
+		Logic logic = new Logic();
+		AI ai = new AI(1, SEED, false);
+		logic.placePiece(0, 0);
+		logic.placePiece(2, 0);
+		logic.placePiece(0, 1);
+		logic.placePiece(2, 1);
+		logic.placePiece(2, 2);
+		
+		logic.setPhase(3);
+		
+		ai.turn(logic);
+		
+		assertTrue(logic.getBoard().getBoardNode(2, 2) == 0);
+		assertTrue(logic.getBoard().getBoardNode(0, 0) == 1 && logic.getBoard().getBoardNode(0, 1) == 1);
+	}
+	
+	@Test
+	public void AItestRemovePriorityCenter(){
+		Logic logic = new Logic();
+		AI ai = new AI(1, SEED, false);
+		logic.placePiece(0, 0);
+		logic.placePiece(2, 0);
+		logic.placePiece(0, 2);
+		logic.placePiece(2, 2);
+		logic.placePiece(2, 1);
+		
+		logic.setPhase(3);
+		
+		ai.turn(logic);
+		
+		assertTrue(logic.getBoard().getBoardNode(2, 1) == 0);
+		assertTrue(logic.getBoard().getBoardNode(0, 0) == 1 && logic.getBoard().getBoardNode(0, 2) == 1);
+	}
+	
+	@Test
+	public void AItestRemoveRandom(){
+		Logic logic = new Logic();
+		AI ai = new AI(1, SEED, false);
+		logic.placePiece(0, 0);
+		logic.placePiece(1, 0);
+		logic.placePiece(2, 0);
+		
+		logic.setPhase(3);
+		
+		ai.turn(logic);
+		
+		assertTrue(logic.getBoard().getBoardNode(0, 0) == 0 || logic.getBoard().getBoardNode(2, 0) == 0);
+	}
+	
+	@Test
+	public void EasyAItestRemoveRandom(){
+		Logic logic = new Logic();
+		AI ai = new AI(0, SEED, false);
+		logic.placePiece(0, 0);
+		logic.placePiece(1, 0);
+		logic.placePiece(2, 0);
+		
+		logic.setPhase(3);
+		
+		ai.turn(logic);
+		
+		assertTrue(logic.getBoard().getBoardNode(0, 0) == 0 || logic.getBoard().getBoardNode(2, 0) == 0);
+	}
 }
