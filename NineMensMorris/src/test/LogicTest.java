@@ -622,7 +622,7 @@ public class LogicTest {
 		expected.add(new Point(1, 7));
 		assertEquals(expected, moves);
 	}
-	
+
 	@Test
 	public void LogicCheckMovesTestWrongPhase() {
 		Logic logic = new Logic();
@@ -632,7 +632,7 @@ public class LogicTest {
 		Collection<Point> expected = new LinkedList<Point>();
 		assertEquals(expected, moves);
 	}
-	
+
 	@Test
 	public void LogicCheckMovesTestWrongPlayer() {
 		Logic logic = new Logic();
@@ -748,12 +748,12 @@ public class LogicTest {
 		Logic logic = new Logic();
 		logic.placePiece(0, 0);
 		logic.placePiece(0, 1);
-		assertEquals(1,logic.getBoard().getBoardNode(0,0));
-		assertEquals(2,logic.getBoard().getBoardNode(0, 1));
+		assertEquals(1, logic.getBoard().getBoardNode(0, 0));
+		assertEquals(2, logic.getBoard().getBoardNode(0, 1));
 		logic.placePiece(0, 7);
 		logic.placePiece(0, 2);
 		logic.placePiece(0, 6);
-		assertEquals(3,logic.getPhase());
+		assertEquals(3, logic.getPhase());
 		logic.placePiece(0, 3);
 		logic.placePiece(0, 4);
 		logic.placePiece(0, 5);
@@ -768,18 +768,18 @@ public class LogicTest {
 		logic.placePiece(2, 0);
 		logic.placePiece(2, 1);
 		assertEquals(2, logic.getPhase());
-		
+
 	}
-	
+
 	@Test
-	public void LogicTestInvalidPlacePiece(){
+	public void LogicTestInvalidPlacePiece() {
 		Logic logic = new Logic();
 		logic.placePiece(0, 0);
 		assertFalse(logic.placePiece(0, 0));
 	}
-	
+
 	@Test
-	public void LogicTestPlayerOneMovePiece(){
+	public void LogicTestPlayerOneMovePiece() {
 		Logic logic = new Logic();
 		logic.placePiece(0, 0);
 		logic.placePiece(0, 2);
@@ -801,9 +801,9 @@ public class LogicTest {
 		logic.placePiece(2, 2);
 		assertTrue(logic.movePiece(0, 0, 0, 1));
 	}
-	
+
 	@Test
-	public void LogicTestPlayerTwoMovePiece(){
+	public void LogicTestPlayerTwoMovePiece() {
 		Logic logic = new Logic();
 		logic.placePiece(0, 0);
 		logic.placePiece(0, 2);
@@ -826,9 +826,9 @@ public class LogicTest {
 		logic.movePiece(0, 0, 0, 1);
 		assertTrue(logic.movePiece(2, 2, 2, 3));
 	}
-	
+
 	@Test
-	public void LogicTestInvalidMovePiece(){
+	public void LogicTestInvalidMovePiece() {
 		Logic logic = new Logic();
 		logic.placePiece(0, 0);
 		logic.placePiece(0, 2);
@@ -850,9 +850,9 @@ public class LogicTest {
 		logic.placePiece(2, 2);
 		assertFalse(logic.movePiece(0, 2, 0, 3));
 	}
-	
+
 	@Test
-	public void LogicTestInvalidMovePiece2(){
+	public void LogicTestInvalidMovePiece2() {
 		Logic logic = new Logic();
 		logic.placePiece(0, 0);
 		logic.placePiece(0, 2);
@@ -874,9 +874,9 @@ public class LogicTest {
 		logic.placePiece(2, 2);
 		assertFalse(logic.movePiece(0, 0, 2, 3));
 	}
-	
+
 	@Test
-	public void LogicTestPlayerOneRemovePiecePhase2(){
+	public void LogicTestPlayerOneRemovePiecePhase2() {
 		Logic logic = new Logic();
 		logic.placePiece(0, 0);
 		logic.placePiece(0, 2);
@@ -898,17 +898,17 @@ public class LogicTest {
 		logic.placePiece(2, 2);
 		assertTrue(logic.removePiece(0, 2));
 	}
-	
+
 	@Test
-	public void LogicTestPlayerOneRemovePiecePhase1(){
+	public void LogicTestPlayerOneRemovePiecePhase1() {
 		Logic logic = new Logic();
 		logic.placePiece(0, 0);
 		logic.placePiece(0, 2);
 		assertTrue(logic.removePiece(0, 2));
 	}
-	
+
 	@Test
-	public void LogicTestPlayerTwoRemovePiecePhase2(){
+	public void LogicTestPlayerTwoRemovePiecePhase2() {
 		Logic logic = new Logic();
 		logic.placePiece(0, 0);
 		logic.placePiece(0, 2);
@@ -931,18 +931,18 @@ public class LogicTest {
 		logic.removePiece(0, 2);
 		assertTrue(logic.removePiece(0, 0));
 	}
-	
+
 	@Test
-	public void LogicTestPlayerTwoRemovePiecePhase1(){
+	public void LogicTestPlayerTwoRemovePiecePhase1() {
 		Logic logic = new Logic();
 		logic.placePiece(0, 0);
 		logic.placePiece(0, 2);
 		logic.placePiece(0, 3);
 		assertTrue(logic.removePiece(0, 3));
 	}
-	
+
 	@Test
-	public void LogicTestPlayerOneRemovePiecePhase1Mill(){
+	public void LogicTestPlayerOneRemovePiecePhase1Mill() {
 		Logic logic = new Logic();
 		logic.placePiece(0, 0);
 		logic.placePiece(0, 6);
@@ -956,9 +956,9 @@ public class LogicTest {
 		logic.placePiece(0, 2);
 		assertFalse(logic.removePiece(0, 6));
 	}
-	
+
 	@Test
-	public void LogicTestPlayerTwoRemovePiecePhase1Mill(){
+	public void LogicTestPlayerTwoRemovePiecePhase1Mill() {
 		Logic logic = new Logic();
 		logic.placePiece(0, 0);
 		logic.placePiece(0, 6);
@@ -974,9 +974,9 @@ public class LogicTest {
 		logic.placePiece(0, 6);
 		assertFalse(logic.removePiece(0, 0));
 	}
-	
+
 	@Test
-	public void LogicTestPlayerOneRemovePiecePhase1OnlyMill(){
+	public void LogicTestPlayerOneRemovePiecePhase1OnlyMill() {
 		Logic logic = new Logic();
 		logic.placePiece(0, 0);
 		logic.placePiece(0, 6);
@@ -988,9 +988,9 @@ public class LogicTest {
 		logic.placePiece(0, 2);
 		assertTrue(logic.removePiece(0, 6));
 	}
-	
+
 	@Test
-	public void LogicTestPlayerOneRemovePiecePhase1OverlapMills(){
+	public void LogicTestPlayerOneRemovePiecePhase1OverlapMills() {
 		Logic logic = new Logic();
 		logic.placePiece(0, 0);
 		logic.placePiece(1, 2);
@@ -1006,56 +1006,56 @@ public class LogicTest {
 		logic.placePiece(0, 2);
 		assertTrue(logic.removePiece(1, 3));
 	}
-	
+
 	@Test
-	public void LogicTestPlayerOneRemovePiecePhase2OverlapMills(){
+	public void LogicTestPlayerOneRemovePiecePhase2OverlapMills() {
 		Logic logic = new Logic();
-		logic.placePiece(0, 0); //1
-		logic.placePiece(1, 2); //2
-		logic.placePiece(0, 1); //1
-		logic.placePiece(1, 4); //2
-		logic.placePiece(1, 0); //1
-		logic.placePiece(2, 3); //2
-		logic.placePiece(1, 1); //1
-		logic.placePiece(0, 3); //2
-		logic.placePiece(1, 7); //1
-		logic.placePiece(0, 6); //2
-		logic.placePiece(2, 2); //1
-		logic.placePiece(0, 4); //2
-		logic.placePiece(1, 5); //1
-		logic.placePiece(2, 0); //2
-		logic.placePiece(2, 6); //1
-		logic.placePiece(2, 1); //2
-		logic.placePiece(2, 4); //1
-		logic.placePiece(1, 3); //2
-		logic.removePiece(1, 0); //2 remove 1
-		logic.movePiece(1, 5, 2, 5); //1
-		logic.removePiece(2, 0); //1 remove 2
-		logic.movePiece(0, 6, 0, 5); //2
-		logic.movePiece(2, 5, 1, 5); //1
-		logic.movePiece(0, 5, 0, 6); //2
-		logic.movePiece(1, 5, 2, 5); //1
-		logic.removePiece(2, 1); //1 remove 2
-		logic.movePiece(0, 6, 0, 5); //2
-		logic.movePiece(2, 5, 1, 5); //1
-		logic.movePiece(0, 5, 0, 6); //2
-		logic.movePiece(1, 5, 2, 5); //1
-		logic.removePiece(0, 4); //1 remove 2
-		logic.movePiece(0, 6, 0, 5); //2
-		logic.movePiece(2, 5, 1, 5); //1
-		logic.movePiece(0, 5, 0, 6); //2
-		logic.movePiece(1, 5, 2, 5); //1
-		logic.removePiece(0, 6); //1 remove 2
-		logic.movePiece(0, 3, 0, 4); //2
-		logic.movePiece(2, 5, 1, 5); //1
-		logic.movePiece(0, 4, 0, 3); //2
-		logic.removePiece(0, 0); //2 remove 1
-		logic.movePiece(1, 5, 2, 5); //1
-		assertTrue(logic.removePiece(1, 3)); //1 remove 2
+		logic.placePiece(0, 0); // 1
+		logic.placePiece(1, 2); // 2
+		logic.placePiece(0, 1); // 1
+		logic.placePiece(1, 4); // 2
+		logic.placePiece(1, 0); // 1
+		logic.placePiece(2, 3); // 2
+		logic.placePiece(1, 1); // 1
+		logic.placePiece(0, 3); // 2
+		logic.placePiece(1, 7); // 1
+		logic.placePiece(0, 6); // 2
+		logic.placePiece(2, 2); // 1
+		logic.placePiece(0, 4); // 2
+		logic.placePiece(1, 5); // 1
+		logic.placePiece(2, 0); // 2
+		logic.placePiece(2, 6); // 1
+		logic.placePiece(2, 1); // 2
+		logic.placePiece(2, 4); // 1
+		logic.placePiece(1, 3); // 2
+		logic.removePiece(1, 0); // 2 remove 1
+		logic.movePiece(1, 5, 2, 5); // 1
+		logic.removePiece(2, 0); // 1 remove 2
+		logic.movePiece(0, 6, 0, 5); // 2
+		logic.movePiece(2, 5, 1, 5); // 1
+		logic.movePiece(0, 5, 0, 6); // 2
+		logic.movePiece(1, 5, 2, 5); // 1
+		logic.removePiece(2, 1); // 1 remove 2
+		logic.movePiece(0, 6, 0, 5); // 2
+		logic.movePiece(2, 5, 1, 5); // 1
+		logic.movePiece(0, 5, 0, 6); // 2
+		logic.movePiece(1, 5, 2, 5); // 1
+		logic.removePiece(0, 4); // 1 remove 2
+		logic.movePiece(0, 6, 0, 5); // 2
+		logic.movePiece(2, 5, 1, 5); // 1
+		logic.movePiece(0, 5, 0, 6); // 2
+		logic.movePiece(1, 5, 2, 5); // 1
+		logic.removePiece(0, 6); // 1 remove 2
+		logic.movePiece(0, 3, 0, 4); // 2
+		logic.movePiece(2, 5, 1, 5); // 1
+		logic.movePiece(0, 4, 0, 3); // 2
+		logic.removePiece(0, 0); // 2 remove 1
+		logic.movePiece(1, 5, 2, 5); // 1
+		assertTrue(logic.removePiece(1, 3)); // 1 remove 2
 	}
-	
+
 	@Test
-	public void LogicTestLoserNoValidMoves(){
+	public void LogicTestLoserNoValidMoves() {
 		Logic logic = new Logic();
 		Board board = logic.getBoard();
 		logic.addPlayerOnePieces(new Point(0, 0));
@@ -1077,16 +1077,16 @@ public class LogicTest {
 		logic.setPhase(2);
 		assertTrue(logic.isLoser(logic.getPlayerOnePieces()));
 	}
-	
-	//-----------AI TESTS---------------------------
-	
+
+	// -----------AI TESTS---------------------------
+
 	private static final int SEED = 20;
-	
+
 	@Test
 	public void AItestHardvsEasy() {
 		Logic logic = new Logic();
-		AI hard = new AI(1,SEED,false);
-		TestAI easy = new TestAI(0,false);
+		AI hard = new AI(1, SEED, false);
+		TestAI easy = new TestAI(0, false);
 		while (logic.getPhase() != 4) {
 			if (logic.getPhase() == 1) {
 				easy.turn(logic);
@@ -1106,12 +1106,12 @@ public class LogicTest {
 		}
 		assertTrue(logic.getWinner() == 2);
 	}
-	
+
 	@Test
 	public void AItestHardvsEasyReversed() {
 		Logic logic = new Logic();
-		AI easy = new AI(0,SEED,false);
-		TestAI hard = new TestAI(1,false);
+		AI easy = new AI(0, SEED, false);
+		TestAI hard = new TestAI(1, false);
 		while (logic.getPhase() != 4) {
 			if (logic.getPhase() == 1) {
 				hard.turn(logic);
@@ -1131,126 +1131,204 @@ public class LogicTest {
 		}
 		assertTrue(logic.getWinner() == 1);
 	}
-	
+
 	@Test
 	public void AItestMoveCreateMill() {
 		Logic logic = new Logic();
-		AI ai = new AI(1,SEED,false);
-		logic.addPlayerTwoPieces(new Point(0,0));
-		logic.addPlayerTwoPieces(new Point(0,1));
-		logic.addPlayerTwoPieces(new Point(0,3));
+		AI ai = new AI(1, SEED, false);
+		logic.addPlayerTwoPieces(new Point(0, 0));
+		logic.addPlayerTwoPieces(new Point(0, 1));
+		logic.addPlayerTwoPieces(new Point(0, 3));
 		logic.setBoardNode(0, 0, 2);
 		logic.setBoardNode(0, 1, 2);
 		logic.setBoardNode(0, 3, 2);
-		logic.removeEmptySpace(new Point(0,0));
-		logic.removeEmptySpace(new Point(0,1));
-		logic.removeEmptySpace(new Point(0,3));
+		logic.removeEmptySpace(new Point(0, 0));
+		logic.removeEmptySpace(new Point(0, 1));
+		logic.removeEmptySpace(new Point(0, 3));
 		logic.setPiecesPlaced(18);
 		logic.setPhase(2);
 		logic.setPlayer();
 		ai.turn(logic);
 		assertTrue(logic.getBoard().checkMill(0, 0, 2));
 	}
-	
+
 	@Test
 	public void AItestMoveBlockMill() {
 		Logic logic = new Logic();
-		AI ai = new AI(1,SEED,false);
-		logic.addPlayerOnePieces(new Point(2,7));
-		logic.addPlayerOnePieces(new Point(0,7));
-		logic.addPlayerTwoPieces(new Point(1,0));
+		AI ai = new AI(1, SEED, false);
+		logic.addPlayerOnePieces(new Point(2, 7));
+		logic.addPlayerOnePieces(new Point(0, 7));
+		logic.addPlayerTwoPieces(new Point(1, 0));
 		logic.setBoardNode(2, 7, 1);
 		logic.setBoardNode(0, 7, 1);
 		logic.setBoardNode(1, 0, 2);
-		logic.removeEmptySpace(new Point(2,7));
-		logic.removeEmptySpace(new Point(0,7));
-		logic.removeEmptySpace(new Point(1,0));
+		logic.removeEmptySpace(new Point(2, 7));
+		logic.removeEmptySpace(new Point(0, 7));
+		logic.removeEmptySpace(new Point(1, 0));
 		logic.setPiecesPlaced(18);
 		logic.setPhase(2);
 		logic.setPlayer();
 		ai.turn(logic);
-		assertTrue(logic.getBoard().getBoardNode(1,7) == 2);
+		assertTrue(logic.getBoard().getBoardNode(1, 7) == 2);
 	}
-	
+
 	@Test
 	public void AItestMoveWithinMill() {
 		Logic logic = new Logic();
-		AI ai = new AI(1,SEED,false);
-		logic.addPlayerTwoPieces(new Point(0,5));
-		logic.addPlayerTwoPieces(new Point(1,5));
-		logic.addPlayerTwoPieces(new Point(2,5));
-		logic.addPlayerTwoPieces(new Point(0,0));
+		AI ai = new AI(1, SEED, false);
+		logic.addPlayerTwoPieces(new Point(0, 5));
+		logic.addPlayerTwoPieces(new Point(1, 5));
+		logic.addPlayerTwoPieces(new Point(2, 5));
+		logic.addPlayerTwoPieces(new Point(0, 0));
 		logic.setBoardNode(0, 5, 2);
 		logic.setBoardNode(1, 5, 2);
 		logic.setBoardNode(2, 5, 2);
 		logic.setBoardNode(0, 0, 2);
-		logic.removeEmptySpace(new Point(0,5));
-		logic.removeEmptySpace(new Point(1,5));
-		logic.removeEmptySpace(new Point(2,5));
-		logic.removeEmptySpace(new Point(0,0));
+		logic.removeEmptySpace(new Point(0, 5));
+		logic.removeEmptySpace(new Point(1, 5));
+		logic.removeEmptySpace(new Point(2, 5));
+		logic.removeEmptySpace(new Point(0, 0));
 		logic.setPiecesPlaced(18);
 		logic.setPhase(2);
 		logic.setPlayer();
 		ai.turn(logic);
-		assertFalse(logic.getBoard().checkMill(1,5,2));
+		assertFalse(logic.getBoard().checkMill(1, 5, 2));
 	}
-	
+
 	@Test
 	public void AItestPriorityMoveCreateMill() {
 		Logic logic = new Logic();
-		AI ai = new AI(1,SEED,false);
-		logic.addPlayerTwoPieces(new Point(0,0));
-		logic.addPlayerTwoPieces(new Point(0,1));
-		logic.addPlayerTwoPieces(new Point(0,3));
-		logic.addPlayerTwoPieces(new Point(0,5));
-		logic.addPlayerOnePieces(new Point(1,6));
-		logic.addPlayerOnePieces(new Point(1,4));
+		AI ai = new AI(1, SEED, false);
+		logic.addPlayerTwoPieces(new Point(0, 0));
+		logic.addPlayerTwoPieces(new Point(0, 1));
+		logic.addPlayerTwoPieces(new Point(0, 3));
+		logic.addPlayerTwoPieces(new Point(0, 5));
+		logic.addPlayerOnePieces(new Point(1, 6));
+		logic.addPlayerOnePieces(new Point(1, 4));
 		logic.setBoardNode(0, 0, 2);
 		logic.setBoardNode(0, 1, 2);
 		logic.setBoardNode(0, 3, 2);
 		logic.setBoardNode(0, 5, 2);
 		logic.setBoardNode(1, 6, 1);
 		logic.setBoardNode(1, 4, 1);
-		logic.removeEmptySpace(new Point(0,0));
-		logic.removeEmptySpace(new Point(0,1));
-		logic.removeEmptySpace(new Point(0,3));
-		logic.removeEmptySpace(new Point(0,5));
-		logic.removeEmptySpace(new Point(1,6));
-		logic.removeEmptySpace(new Point(1,4));
+		logic.removeEmptySpace(new Point(0, 0));
+		logic.removeEmptySpace(new Point(0, 1));
+		logic.removeEmptySpace(new Point(0, 3));
+		logic.removeEmptySpace(new Point(0, 5));
+		logic.removeEmptySpace(new Point(1, 6));
+		logic.removeEmptySpace(new Point(1, 4));
 		logic.setPiecesPlaced(18);
 		logic.setPhase(2);
 		logic.setPlayer();
 		ai.turn(logic);
 		assertTrue(logic.getBoard().checkMill(0, 0, 2));
 	}
-	
+
 	@Test
 	public void AItestPriorityMoveBlockMill() {
 		Logic logic = new Logic();
-		AI ai = new AI(1,SEED,false);
-		logic.addPlayerOnePieces(new Point(0,0));
-		logic.addPlayerOnePieces(new Point(0,1));
-		logic.addPlayerTwoPieces(new Point(0,3));
-		logic.addPlayerTwoPieces(new Point(1,5));
-		logic.addPlayerTwoPieces(new Point(1,6));
-		logic.addPlayerTwoPieces(new Point(1,4));
+		AI ai = new AI(1, SEED, false);
+		logic.addPlayerOnePieces(new Point(0, 0));
+		logic.addPlayerOnePieces(new Point(0, 1));
+		logic.addPlayerTwoPieces(new Point(0, 3));
+		logic.addPlayerTwoPieces(new Point(1, 5));
+		logic.addPlayerTwoPieces(new Point(1, 6));
+		logic.addPlayerTwoPieces(new Point(1, 4));
 		logic.setBoardNode(0, 0, 1);
 		logic.setBoardNode(0, 1, 1);
 		logic.setBoardNode(0, 3, 2);
 		logic.setBoardNode(1, 5, 2);
 		logic.setBoardNode(1, 6, 2);
 		logic.setBoardNode(1, 4, 2);
-		logic.removeEmptySpace(new Point(0,0));
-		logic.removeEmptySpace(new Point(0,1));
-		logic.removeEmptySpace(new Point(0,3));
-		logic.removeEmptySpace(new Point(1,5));
-		logic.removeEmptySpace(new Point(1,6));
-		logic.removeEmptySpace(new Point(1,4));
+		logic.removeEmptySpace(new Point(0, 0));
+		logic.removeEmptySpace(new Point(0, 1));
+		logic.removeEmptySpace(new Point(0, 3));
+		logic.removeEmptySpace(new Point(1, 5));
+		logic.removeEmptySpace(new Point(1, 6));
+		logic.removeEmptySpace(new Point(1, 4));
 		logic.setPiecesPlaced(18);
 		logic.setPhase(2);
 		logic.setPlayer();
 		ai.turn(logic);
-		assertTrue(logic.getBoard().getBoardNode(0,2) == 2);
+		assertTrue(logic.getBoard().getBoardNode(0, 2) == 2);
+	}
+
+	@Test
+	public void AItestPlacePiece(){
+		Logic logic = new Logic();
+		AI ai = new AI(1,SEED,false);
+		logic.placePiece(1, 1);
+		ai.turn(logic);
+		assertTrue(logic.getBoard().getBoardNode(1, 7) == 2);
+	
 	}
 	
+	@Test
+	public void AItestPlacePieceAdjacent(){
+		Logic logic = new Logic();
+		AI ai = new AI(1,SEED,false);
+		logic.placePiece(1, 1);
+		ai.turn(logic);
+		logic.placePiece(0, 0);
+		ai.turn(logic);
+		assertTrue(logic.getBoard().getBoardNode(1, 7) == 2);
+		assertTrue(logic.getBoard().getBoardNode(2, 7) == 2);
+	}
+
+	@Test
+	public void AItestPlacePieceMillFormation() {
+		Logic logic = new Logic();
+		AI ai = new AI(1,SEED,false);
+		logic.placePiece(1, 1);
+		ai.turn(logic);
+		logic.placePiece(0, 0);
+		ai.turn(logic);
+		logic.placePiece(0, 5);
+		ai.turn(logic);
+		assertTrue(logic.getBoard().getBoardNode(1, 7) == 2);
+		assertTrue(logic.getBoard().getBoardNode(2, 7) == 2);
+		assertTrue(logic.getBoard().getBoardNode(0, 7) == 2);
+	}
+
+	@Test
+	public void AItestPlacePieceMillBlock() {
+		Logic logic = new Logic();
+		AI ai = new AI(1,SEED,false);
+		logic.placePiece(1, 1);
+		ai.turn(logic);
+		logic.placePiece(0, 1);
+		ai.turn(logic);
+		assertTrue(logic.getBoard().getBoardNode(1, 7) == 2);
+		assertTrue(logic.getBoard().getBoardNode(2, 1) == 2);
+	}
+	
+	@Test
+	public void AItestPlacePiecePriority(){
+		Logic logic = new Logic();
+		AI ai = new AI(1,SEED,false);
+		logic.placePiece(1, 1);
+		ai.turn(logic);
+		logic.placePiece(0, 0);
+		ai.turn(logic);
+		logic.placePiece(0, 1);
+		ai.turn(logic);
+		assertTrue(logic.getBoard().getBoardNode(1, 7) == 2);
+		assertTrue(logic.getBoard().getBoardNode(2, 7) == 2);
+		assertTrue(logic.getBoard().getBoardNode(0, 7) == 2);
+	}
+
+	@Test
+	public void AItestPlacePieceRandom() {
+		Logic logic = new Logic();
+		AI ai = new AI(0,SEED,false);
+		logic.placePiece(1, 1);
+		ai.turn(logic);
+		logic.placePiece(0, 1);
+		ai.turn(logic);
+		assertTrue(logic.getBoard().getBoardNode(1, 7) == 2);
+		assertTrue(logic.getBoard().getBoardNode(2, 3) == 2);
+	}
+
+	
+
 }
