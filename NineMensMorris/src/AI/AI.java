@@ -20,9 +20,21 @@ public class AI {
 	private List<Point> emptySpaces;
 	private Logic logic;
 	private int difficulty;
+	private boolean pause;
 
 	public AI(int difficulty) {
+		pause = true;
 		rand = new Random();
+		if (difficulty < 0 || difficulty > 1) {
+			this.difficulty = 2;
+		} else {
+			this.difficulty = difficulty; // 0=easy, 1=normal
+		}
+	}
+	
+	public AI(int difficulty, int seed, boolean pause) {
+		pause = false;
+		rand = new Random(seed);
 		if (difficulty < 0 || difficulty > 1) {
 			this.difficulty = 2;
 		} else {
@@ -44,8 +56,8 @@ public class AI {
 		this.logic = logic;
 		emptySpaces = logic.getEmptySpaces();
 		board = logic.getBoard();
-
-		pause();
+		if (pause)
+			pause();
 
 		if (difficulty == 1) {
 			// MOVING PIECES PHASE
@@ -85,7 +97,7 @@ public class AI {
 	 */
 	private void pause() {
 		long current = System.currentTimeMillis();
-		long end = current + 2000;
+		long end = current + 1000;
 		while (current < end) {
 			current = System.currentTimeMillis();
 		}

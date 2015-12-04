@@ -1080,10 +1080,12 @@ public class LogicTest {
 	
 	//-----------AI TESTS---------------------------
 	
+	private static final int SEED = 20;
+	
 	@Test
 	public void AItestHardvsEasy() {
 		Logic logic = new Logic();
-		AI hard = new AI(1);
+		AI hard = new AI(1,SEED,false);
 		TestAI easy = new TestAI(0,false);
 		while (logic.getPhase() != 4) {
 			if (logic.getPhase() == 1) {
@@ -1108,7 +1110,7 @@ public class LogicTest {
 	@Test
 	public void AItestHardvsEasyReversed() {
 		Logic logic = new Logic();
-		AI easy = new AI(0);
+		AI easy = new AI(0,SEED,false);
 		TestAI hard = new TestAI(1,false);
 		while (logic.getPhase() != 4) {
 			if (logic.getPhase() == 1) {
@@ -1128,6 +1130,127 @@ public class LogicTest {
 			}
 		}
 		assertTrue(logic.getWinner() == 1);
+	}
+	
+	@Test
+	public void AItestMoveCreateMill() {
+		Logic logic = new Logic();
+		AI ai = new AI(1,SEED,false);
+		logic.addPlayerTwoPieces(new Point(0,0));
+		logic.addPlayerTwoPieces(new Point(0,1));
+		logic.addPlayerTwoPieces(new Point(0,3));
+		logic.setBoardNode(0, 0, 2);
+		logic.setBoardNode(0, 1, 2);
+		logic.setBoardNode(0, 3, 2);
+		logic.removeEmptySpace(new Point(0,0));
+		logic.removeEmptySpace(new Point(0,1));
+		logic.removeEmptySpace(new Point(0,3));
+		logic.setPiecesPlaced(18);
+		logic.setPhase(2);
+		logic.setPlayer();
+		ai.turn(logic);
+		assertTrue(logic.getBoard().checkMill(0, 0, 2));
+	}
+	
+	@Test
+	public void AItestMoveBlockMill() {
+		Logic logic = new Logic();
+		AI ai = new AI(1,SEED,false);
+		logic.addPlayerOnePieces(new Point(2,7));
+		logic.addPlayerOnePieces(new Point(0,7));
+		logic.addPlayerTwoPieces(new Point(1,0));
+		logic.setBoardNode(2, 7, 1);
+		logic.setBoardNode(0, 7, 1);
+		logic.setBoardNode(1, 0, 2);
+		logic.removeEmptySpace(new Point(2,7));
+		logic.removeEmptySpace(new Point(0,7));
+		logic.removeEmptySpace(new Point(1,0));
+		logic.setPiecesPlaced(18);
+		logic.setPhase(2);
+		logic.setPlayer();
+		ai.turn(logic);
+		assertTrue(logic.getBoard().getBoardNode(1,7) == 2);
+	}
+	
+	@Test
+	public void AItestMoveWithinMill() {
+		Logic logic = new Logic();
+		AI ai = new AI(1,SEED,false);
+		logic.addPlayerTwoPieces(new Point(0,5));
+		logic.addPlayerTwoPieces(new Point(1,5));
+		logic.addPlayerTwoPieces(new Point(2,5));
+		logic.addPlayerTwoPieces(new Point(0,0));
+		logic.setBoardNode(0, 5, 2);
+		logic.setBoardNode(1, 5, 2);
+		logic.setBoardNode(2, 5, 2);
+		logic.setBoardNode(0, 0, 2);
+		logic.removeEmptySpace(new Point(0,5));
+		logic.removeEmptySpace(new Point(1,5));
+		logic.removeEmptySpace(new Point(2,5));
+		logic.removeEmptySpace(new Point(0,0));
+		logic.setPiecesPlaced(18);
+		logic.setPhase(2);
+		logic.setPlayer();
+		ai.turn(logic);
+		assertFalse(logic.getBoard().checkMill(1,5,2));
+	}
+	
+	@Test
+	public void AItestPriorityMoveCreateMill() {
+		Logic logic = new Logic();
+		AI ai = new AI(1,SEED,false);
+		logic.addPlayerTwoPieces(new Point(0,0));
+		logic.addPlayerTwoPieces(new Point(0,1));
+		logic.addPlayerTwoPieces(new Point(0,3));
+		logic.addPlayerTwoPieces(new Point(0,5));
+		logic.addPlayerOnePieces(new Point(1,6));
+		logic.addPlayerOnePieces(new Point(1,4));
+		logic.setBoardNode(0, 0, 2);
+		logic.setBoardNode(0, 1, 2);
+		logic.setBoardNode(0, 3, 2);
+		logic.setBoardNode(0, 5, 2);
+		logic.setBoardNode(1, 6, 1);
+		logic.setBoardNode(1, 4, 1);
+		logic.removeEmptySpace(new Point(0,0));
+		logic.removeEmptySpace(new Point(0,1));
+		logic.removeEmptySpace(new Point(0,3));
+		logic.removeEmptySpace(new Point(0,5));
+		logic.removeEmptySpace(new Point(1,6));
+		logic.removeEmptySpace(new Point(1,4));
+		logic.setPiecesPlaced(18);
+		logic.setPhase(2);
+		logic.setPlayer();
+		ai.turn(logic);
+		assertTrue(logic.getBoard().checkMill(0, 0, 2));
+	}
+	
+	@Test
+	public void AItestPriorityMoveBlockMill() {
+		Logic logic = new Logic();
+		AI ai = new AI(1,SEED,false);
+		logic.addPlayerOnePieces(new Point(0,0));
+		logic.addPlayerOnePieces(new Point(0,1));
+		logic.addPlayerTwoPieces(new Point(0,3));
+		logic.addPlayerTwoPieces(new Point(1,5));
+		logic.addPlayerTwoPieces(new Point(1,6));
+		logic.addPlayerTwoPieces(new Point(1,4));
+		logic.setBoardNode(0, 0, 1);
+		logic.setBoardNode(0, 1, 1);
+		logic.setBoardNode(0, 3, 2);
+		logic.setBoardNode(1, 5, 2);
+		logic.setBoardNode(1, 6, 2);
+		logic.setBoardNode(1, 4, 2);
+		logic.removeEmptySpace(new Point(0,0));
+		logic.removeEmptySpace(new Point(0,1));
+		logic.removeEmptySpace(new Point(0,3));
+		logic.removeEmptySpace(new Point(1,5));
+		logic.removeEmptySpace(new Point(1,6));
+		logic.removeEmptySpace(new Point(1,4));
+		logic.setPiecesPlaced(18);
+		logic.setPhase(2);
+		logic.setPlayer();
+		ai.turn(logic);
+		assertTrue(logic.getBoard().getBoardNode(0,2) == 2);
 	}
 	
 }

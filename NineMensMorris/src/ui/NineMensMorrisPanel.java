@@ -105,7 +105,7 @@ public class NineMensMorrisPanel extends JPanel {
 	 */
 	public class BoardClickListener {
 		private NineMensMorrisPanel panel;
-		private Point prevPoint;
+		private Point prevPoint = null;
 		
 		/**
 		 * Sets the click listener to listen for mouse clicks on the game board panel
@@ -132,10 +132,13 @@ public class NineMensMorrisPanel extends JPanel {
 					if (prevPoint != null && logic.movePiece(prevPoint.x, prevPoint.y, p.x, p.y)) {
 						prevPoint = null;
 						panel.setValidMoves(Collections.emptyList());
+						panel.boardPanel.setSelectedPiece(null);
 						ai = gameType < 2;
 					} else {
 						prevPoint = p;
-						panel.setValidMoves(panel.logic.checkMoves(p.x, p.y));
+						Collection<Point> validMoves = panel.logic.checkMoves(p.x, p.y);
+						panel.setValidMoves(validMoves);
+						panel.boardPanel.setSelectedPiece(validMoves.size() > 0 ? index : null);
 					}
 					break;	
 				case 3: // remove piece
@@ -197,11 +200,13 @@ public class NineMensMorrisPanel extends JPanel {
 			panel.gameType = gameType;
 			panel.AI = new AI(gameType);
 			panel.controlsPanel.setPlayerLabel(logic.getPlayer());
+			panel.controlsPanel.setGameMode(gameType);
 			panel.controlsPanel.setInstructions(logic.getPhase());
 			panel.controlsPanel.setPiecesPlaced(0);
 			panel.setPlayerPieces(1, Collections.emptyList());
 			panel.setPlayerPieces(2, Collections.emptyList());
 			panel.setValidMoves(Collections.emptyList());
+			panel.boardPanel.setSelectedPiece(null);
 		}
 	}
 }
