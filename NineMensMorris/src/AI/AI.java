@@ -14,6 +14,7 @@ import logic.Logic;
  *
  */
 public class AI {
+	private static final int PAUSE_AMOUNT = 700;
 
 	private Board board;
 	private Random rand;
@@ -97,7 +98,7 @@ public class AI {
 	 */
 	private void pause() {
 		long current = System.currentTimeMillis();
-		long end = current + 1000;
+		long end = current + PAUSE_AMOUNT;
 		while (current < end) {
 			current = System.currentTimeMillis();
 		}
